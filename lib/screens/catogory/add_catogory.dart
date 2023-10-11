@@ -28,9 +28,6 @@ class AddCatogory extends StatelessWidget {
                 child: Form(
                   key: _key,
                   child: TextFormField(
-                    // inputFormatters: [
-                    //   FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z\s]+$')),
-                    // ],
                     controller: _purpose,
                     validator: (value) {
                       if((!RegExp(r'^\S+(?!\d+$)').hasMatch(value!)) ){

@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:moneymanager/db/function/transaction/transaction_db.dart';
 import 'package:moneymanager/db/model/catogory/catogory_model.dart';
 import 'package:moneymanager/db/model/transaction/transaction_model.dart';
+import 'package:moneymanager/screens/app_bar/all_appbar.dart';
 import 'package:moneymanager/screens/catogory/catogory_income.dart';
 import 'package:moneymanager/theme/theme_constants.dart';
 import 'package:recase/recase.dart';
@@ -14,30 +15,32 @@ class DeletedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        //  Search(),
-        Expanded(
-          child: ValueListenableBuilder(
-            valueListenable: TransactionDb().allTransactionListener,
-            builder: (BuildContext context, List<TransactionModel> newList, _) {
-              return newList.isNotEmpty
-                  ? ListView.builder(
-                      itemBuilder: (ctx, index) {
-                        return deletedCard(
-                            context, newList.reversed.toList()[index]);
-                      },
-                      itemCount: newList.length,
-                    )
-                  : Center(
-                      child: Text(
-                      'no data found',
-                      style: TextStyle(color: expenseColor),
-                    ));
-            },
-          ),
-        )
-      ],
+    return Scaffold(
+ appBar: AllAppbar(headname: 'Deleted transaction'),
+  body: Column(
+        children: [
+          Expanded(
+            child: ValueListenableBuilder(
+              valueListenable: TransactionDb().deletedTransactionListener,
+              builder: (BuildContext context, List<TransactionModel> newList, _) {
+                return newList.isNotEmpty
+                    ? ListView.builder(
+                        itemBuilder: (ctx, index) {
+                          return deletedCard(
+                              context, newList.reversed.toList()[index]);
+                        },
+                        itemCount: newList.length,
+                      )
+                    : Center(
+                        child: Text(
+                        'no data found',
+                        style: TextStyle(color: expenseColor),
+                      ));
+              },
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -67,7 +70,6 @@ class DeletedCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(transactionModel.id!),
               Container(
                 width: 50,
                 height: 50,
@@ -156,11 +158,8 @@ Future<void> longpressDelete(
           actions: [
             IconButton(
                 onPressed: () async {
-                  // await alerting(context, 'Restore');
-                  // ignore: use_build_context_synchronously
                   Navigator.of(context).pop();
-                  await TransactionDb().deleteTransaction(transactionModel.id!)
-;
+                  await TransactionDb().restoreDeletedTransaction(transactionModel);
                 },
                 icon: const Icon(
                   Icons.restart_alt,
@@ -169,7 +168,7 @@ Future<void> longpressDelete(
                 onPressed: () async {
                   Navigator.of(context).pop();
                   catogoryDeleteSnackBar(context, 'Transaction');
-                  await TransactionDb().deleteTransaction(transactionModel.id!);
+                  await TransactionDb().deleteTransactionFromDelete(transactionModel);
                 },
                 icon: const Icon(
                   Icons.delete,

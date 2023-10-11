@@ -22,7 +22,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   final _amount = TextEditingController();
   final _key = GlobalKey<FormState>();
   bool catogoryIsSelected = false;
-   
+
   @override
   void initState() {
     CatogoryDb().refreshUi();
@@ -33,7 +33,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AllAppbar(headname: 'Add Transaction'),
+        appBar: const AllAppbar(headname: 'Add Transaction'),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -44,9 +44,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     Form(
                         key: _key,
                         child: Column(
-                          
                           children: [
-                             Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Row(
@@ -83,7 +82,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                     )
                                   ],
                                 ),
-                                 Row(
+                                Row(
                                   children: [
                                     Radio(
                                       value: radioSelect,
@@ -109,7 +108,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                 const Text(
                                   'CATOGORY :',
                                   style: TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.w500),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
                                 ),
                                 const SizedBox(
                                   width: 10,
@@ -118,8 +118,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                   height: 40,
                                   width: 200,
                                   decoration: BoxDecoration(
-                                      color:
-                                          const Color.fromARGB(255, 219, 219, 219),
+                                      color: const Color.fromARGB(
+                                          255, 219, 219, 219),
                                       borderRadius: BorderRadius.circular(50)),
                                   child: Center(
                                     child: DropdownButton(
@@ -127,7 +127,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                         value: dropdownvalue,
                                         style: const TextStyle(
                                             color: Colors.black, fontSize: 17),
-                                        items: radioSelect == CatogoryType.income
+                                        items: radioSelect ==
+                                                CatogoryType.income
                                             ? CatogoryDb()
                                                 .incomeCatogoryListtner
                                                 .value
@@ -140,29 +141,29 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                                   child: Text(e.name),
                                                 );
                                               }).toList()
-                                            : radioSelect == CatogoryType.expense ?CatogoryDb()
-                                                .expenseCatogoryListener
-                                                .value
-                                                .map((e) {
-                                                return DropdownMenuItem(
-                                                  onTap: () {
-                                                    catogoryModel = e;
-                                                  },
-                                                  value: e.id,
-                                                  child: Text(e.name),
-                                                );
-                                              }).toList() : CatogoryDb()
-                                                .toatalCatogoryListener
-                                                .value
-                                                .map((e) {
-                                                return DropdownMenuItem(
-                                                  onTap: () {
-                                                    catogoryModel = e;
-                                                  },
-                                                  value: e.id,
-                                                  child: Text(e.name),
-                                                );
-                                              }).toList(),
+                                            : radioSelect ==
+                                                    CatogoryType.expense
+                                                ? CatogoryDb()
+                                                    .expenseCatogoryListener
+                                                    .value
+                                                    .map((e) {
+                                                    return DropdownMenuItem(
+                                                      onTap: () {
+                                                        catogoryModel = e;
+                                                      },
+                                                      value: e.id,
+                                                      child: Text(e.name),
+                                                    );
+                                                  }).toList()
+                                                : [
+                                                     DropdownMenuItem(
+                                                      onTap: () {
+                                                        catogoryModel = CatogoryModel(id: 'undifined', name: 'undifined', type: CatogoryType.undifined , isDeleted: false);
+                                                      },
+                                                      value: 'undifined',
+                                                      child:const Text('undifined'),
+                                                    ),
+                                                  ],
                                         onChanged: (val) {
                                           setState(() {
                                             dropdownvalue = val;
@@ -186,7 +187,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               borderRadius: BorderRadius.circular(10),
                               child: TextFormField(
                                 validator: (value) {
-                                  if ((!RegExp(r'^\S+(?!\d+$)').hasMatch(value!))) {
+                                  if ((!RegExp(r'^\S+(?!\d+$)')
+                                      .hasMatch(value!))) {
                                     return 'enter valid purpose';
                                   } else {
                                     return null;
@@ -243,10 +245,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                 ),
                               ),
                             ),
-                           
                             Container(
                               width: double.infinity,
-                              padding: const EdgeInsets.symmetric(horizontal: 30),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 30),
                               child: ElevatedButton(
                                   onPressed: () {
                                     addTransaction();
@@ -254,7 +256,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                   },
                                   style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(30)),
+                                          borderRadius:
+                                              BorderRadius.circular(30)),
                                       backgroundColor: incomeColor),
                                   child: const Text('ADD')),
                             ),

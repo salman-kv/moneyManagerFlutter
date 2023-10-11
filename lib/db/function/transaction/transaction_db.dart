@@ -5,21 +5,24 @@ import 'package:moneymanager/db/model/transaction/transaction_model.dart';
 import 'package:moneymanager/db/model/graph/graph_model.dart';
 
 const TRANSACTION_DB_NAME = 'transaction-db';
+const deletedDbName = 'deleted-db';
 
 abstract class TransactionDbFunctions {
   Future<void> addTransaction(TransactionModel transactionModel);
   Future<List<TransactionModel>> getTransaction();
-  Future<void> deleteTransaction(String id);
+  // Future<void> deleteTransaction(String id);
   // Future<void> softDeleteTransaction(TransactionModel transactionModel);
 }
 
 class TransactionDb implements TransactionDbFunctions {
-  DateTime? startDateFilter=DateTime.now();
+  DateTime? startDateFilter = DateTime.now();
   ValueNotifier<List<TransactionModel>> allTransactionListener =
       ValueNotifier([]);
   ValueNotifier<List<TransactionModel>> incomeTransactionListener =
       ValueNotifier([]);
   ValueNotifier<List<TransactionModel>> expenceTransactionListener =
+      ValueNotifier([]);
+  ValueNotifier<List<TransactionModel>> deletedTransactionListener =
       ValueNotifier([]);
   ValueNotifier<List<GraphModel>> graphDataListene = ValueNotifier([]);
 
@@ -62,9 +65,8 @@ class TransactionDb implements TransactionDbFunctions {
         }
       },
     );
-      List<TransactionModel> temp = [];
-   
-  
+    List<TransactionModel> temp = [];
+
     temp.addAll(allTransactionListener.value);
     temp.sort((a, b) => a.dateTime.compareTo(b.dateTime));
     print(temp[0].dateTime);
@@ -76,7 +78,7 @@ class TransactionDb implements TransactionDbFunctions {
   }
 
   Future<void> serarchrefreshUi(String name) async {
-    List<TransactionModel> values =await getTransaction();
+    List<TransactionModel> values = await getTransaction();
     values.addAll(allTransactionListener.value);
     allTransactionListener.value.clear();
     incomeTransactionListener.value.clear();
@@ -101,34 +103,41 @@ class TransactionDb implements TransactionDbFunctions {
     expenceTransactionListener.notifyListeners();
   }
 
-  @override
-  Future<void> deleteTransaction(String id) async {
-    final box = await Hive.openBox<TransactionModel>(TRANSACTION_DB_NAME);
-    box.delete(id);
+  Future<void> deleteRefresh() async {
+    deletedTransactionListener.value.clear();
+    final deletedBox = await Hive.openBox<TransactionModel>(deletedDbName);
+    Future.forEach(deletedBox.values, (element) {
+      deletedTransactionListener.value.add(element);
+    });
+    deletedTransactionListener.notifyListeners();
     refreshUi();
   }
 
-  // @override
-  // Future<void> softDeleteTransaction(TransactionModel transactionModel) async {
-  //   print('softdelete');
-  // final box=await Hive.openBox<TransactionModel>(TRANSACTION_DB_NAME);
-  //   var ele= box.get(transactionModel.id);
-  //   ele?.catogoryModel.isDeleted=true;
-  //   await box.put(transactionModel.id, transactionModel);
-  //   refreshUi();
-  // }
+  Future<void> deleteTransaction(TransactionModel transactionModel) async {
+    final deletedBox = await Hive.openBox<TransactionModel>(deletedDbName);
+    deletedBox.put(transactionModel.id, transactionModel);
+    final box = await Hive.openBox<TransactionModel>(TRANSACTION_DB_NAME);
+    box.delete(transactionModel.id);
+    deleteRefresh();
+  }
 
-  // Future<void> restoreSoftDeletedTransaction(TransactionModel transactionModel) async {
-  //   final box=await Hive.openBox<TransactionModel>(TRANSACTION_DB_NAME);
-  //   var ele= box.get(transactionModel.id);
-  //   ele!.catogoryModel.isDeleted=false;
-  //   await box.put(transactionModel.id, transactionModel);
-  //   refreshUi();
-  // }
+  Future<void> deleteTransactionFromDelete(
+      TransactionModel transactionModel) async {
+    final deletedBox = await Hive.openBox<TransactionModel>(deletedDbName);
+    deletedBox.delete(transactionModel.id);
+    deleteRefresh();
+  }
+
+  Future<void> restoreDeletedTransaction(
+      TransactionModel transactionModel) async {
+    final box = await Hive.openBox<TransactionModel>(TRANSACTION_DB_NAME);
+    box.put(transactionModel.id, transactionModel);
+    final deletedBox = await Hive.openBox<TransactionModel>(deletedDbName);
+    deletedBox.delete(transactionModel.id);
+    deleteRefresh();
+  }
 
   Future<void> filterRefresh(int typeOfFilter) async {
-    print(typeOfFilter);
-    // int typeOfFilterMain;
     switch (typeOfFilter) {
       case 0:
         refreshUi();
@@ -200,29 +209,29 @@ class TransactionDb implements TransactionDbFunctions {
 
   Future<void> transactionFilterOnlyDate(
       DateTime startDate, DateTime endDate) async {
-        await refreshUi();
+    await refreshUi();
     List<TransactionModel> tempFilter = [];
     tempFilter.addAll(allTransactionListener.value);
-        // tempFilter.forEach((element) {print(element.porpose);});
-    
+    // tempFilter.forEach((element) {print(element.porpose);});
+
     expenceTransactionListener.value.clear();
     incomeTransactionListener.value.clear();
 
     allTransactionListener.value.clear();
-   Future.forEach(tempFilter, (element) {
-
-      if ((element.dateTime.isBefore(endDate) &&   element.dateTime.isAfter(startDate)) || element.dateTime == startDate || element.dateTime == endDate) {
+    Future.forEach(tempFilter, (element) {
+      if ((element.dateTime.isBefore(endDate) &&
+              element.dateTime.isAfter(startDate)) ||
+          element.dateTime == startDate ||
+          element.dateTime == endDate) {
         allTransactionListener.value.add(element);
         if (element.catogoryType == CatogoryType.income) {
           incomeTransactionListener.value.add(element);
         } else {
           expenceTransactionListener.value.add(element);
         }
-      }
-      else{
+      } else {
         print('not enter --- ${element.porpose}');
       }
-      
     });
 
     allTransactionListener.notifyListeners();
@@ -230,33 +239,64 @@ class TransactionDb implements TransactionDbFunctions {
     incomeTransactionListener.notifyListeners();
   }
 
-    Future<void> transactionFilterWithCatogory(
-      DateTime startDate, DateTime endDate,String catogory) async {
-        await refreshUi();
+  Future<void> transactionFilterWithCatogory(
+      DateTime startDate, DateTime endDate, String catogory) async {
+    await refreshUi();
     List<TransactionModel> tempFilter = [];
     tempFilter.addAll(allTransactionListener.value);
-    
+
     expenceTransactionListener.value.clear();
     incomeTransactionListener.value.clear();
     allTransactionListener.value.clear();
 
     Future.forEach(tempFilter, (element) {
-  
-      if ((element.dateTime.isBefore(endDate) && element.dateTime.isAfter(startDate) && element.catogoryModel.name==catogory) || (element.dateTime == startDate && element.catogoryModel.name==catogory) || (element.dateTime == endDate && element.catogoryModel.name==catogory)) {
+      if ((element.dateTime.isBefore(endDate) &&
+              element.dateTime.isAfter(startDate) &&
+              element.catogoryModel.name == catogory) ||
+          (element.dateTime == startDate &&
+              element.catogoryModel.name == catogory) ||
+          (element.dateTime == endDate &&
+              element.catogoryModel.name == catogory)) {
         allTransactionListener.value.add(element);
-       
+
         if (element.catogoryType == CatogoryType.income) {
           incomeTransactionListener.value.add(element);
         } else {
           expenceTransactionListener.value.add(element);
         }
       }
-      
     });
 
     allTransactionListener.notifyListeners();
     expenceTransactionListener.notifyListeners();
     incomeTransactionListener.notifyListeners();
+  }
+
+  List<GraphModel> incomeExpenceMonthlyTotal() {
+    var dateTime = DateTime.now();
+    var thisMonth = DateTime(dateTime.year, dateTime.month, 1);
+
+    var iSum = 0.0;
+    var eSum = 0.0;
+    List<GraphModel> returnList = [];
+
+    TransactionDb().allTransactionListener.value.forEach((element) {
+      if (element.catogoryType == CatogoryType.income &&
+          (element.dateTime.isAfter(thisMonth) ||
+              element.dateTime == thisMonth)) {
+        iSum += element.amount;
+      } else if (element.catogoryType == CatogoryType.expense &&
+          (element.dateTime.isAfter(thisMonth) ||
+              element.dateTime == thisMonth)) {
+        eSum += element.amount;
+      }
+      // else{
+      //   uSum+=element.amount;
+      // }
+    });
+    returnList.add(GraphModel(sum: iSum, name: 'Income'));
+    returnList.add(GraphModel(sum: eSum, name: 'Expense'));
+    return returnList;
   }
 }
 

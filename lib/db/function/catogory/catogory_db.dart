@@ -47,8 +47,10 @@ class CatogoryDb implements CatogoryDbFunction {
   }
 
   Future<void> refreshUi() async {
-    var box=await Hive.openBox<CatogoryModel>('catogory');
-    for (var element in box.values) {print(' -- -- -- ${element.name} --- ${element.id}');}
+    // var box = await Hive.openBox<CatogoryModel>('catogory');
+    // for (var element in box.values) {
+    //   print(' -- -- -- ${element.name} --- ${element.id}');
+    // }
     final catogoryDB = await getCatogory();
     incomeCatogoryListtner.value.clear();
     expenseCatogoryListener.value.clear();
@@ -84,7 +86,6 @@ class CatogoryDb implements CatogoryDbFunction {
       }
     });
 
-    
     refreshUi();
   }
 

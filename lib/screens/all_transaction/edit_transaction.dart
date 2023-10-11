@@ -156,18 +156,15 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                                                   value: e.id,
                                                   child: Text(e.name),
                                                 );
-                                              }).toList() : CatogoryDb()
-                                                .toatalCatogoryListener
-                                                .value
-                                                .map((e) {
-                                                return DropdownMenuItem(
-                                                  onTap: () {
-                                                    catogoryModel = e;
-                                                  },
-                                                  value: e.id,
-                                                  child: Text(e.name),
-                                                );
-                                              }).toList(),
+                                              }).toList() :[
+                                                     DropdownMenuItem(
+                                                      onTap: () {
+                                                        catogoryModel = CatogoryModel(id: 'undifined', name: 'undifined', type: CatogoryType.undifined , isDeleted: false);
+                                                      },
+                                                      value: 'undifined',
+                                                      child:const Text('undifined'),
+                                                    ),
+                                                  ],
                                     onChanged: (val) {
                                       setState(() {
                                         dropdownvalue = val;

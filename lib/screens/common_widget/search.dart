@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:moneymanager/db/function/catogory/catogory_db.dart';

@@ -128,7 +128,7 @@ class _SingleCardState extends State<SingleCard> {
                         color: incomeColor,
                       ),
                     )
-                  : transactionModel.catogoryType == CatogoryType.income ? SizedBox(
+                  : transactionModel.catogoryType == CatogoryType.expense ? SizedBox(
                       width: 20,
                       height: 20,
                       child: Image.asset(
@@ -140,7 +140,7 @@ class _SingleCardState extends State<SingleCard> {
                       height: 20,
                       child: Image.asset(
                         'icons/expense.png',
-                        color: const  Color.fromARGB(255, 222, 222, 222),
+                        color: Color.fromARGB(255, 19, 96, 178),
                       ),
                     )
             ),

@@ -54,22 +54,42 @@ class CatogoryCard extends StatelessWidget {
       context: context,
       builder: (ctx) {
         return AlertDialog(
-          title: Text('Do you want to delete  "  ${catogoryModel.name}  "'),
+          backgroundColor: Color.fromARGB(255, 238, 237, 235),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)
+          ),
+          title: Column(
+            children: [
+              const Icon(Icons.warning,color: Color.fromARGB(255, 244, 67, 54),size: 29,),
+              const SizedBox(height: 15,),
+              Text('Do you want to delete " ${catogoryModel.name} "',textAlign: TextAlign.center,style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold
+              ),),
+              const SizedBox(height: 5,),
+              const Text('All the transaction related to this catogory will move to " undifined "',textAlign: TextAlign.center,style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+              ),)
+            ],
+          ),
           actions:  [
             IconButton(onPressed: (){
               Navigator.of(context).pop();
             }, icon: const Icon(
               Icons.close,
               color: Colors.red,
+              size: 29,
             ),),
-            IconButton(onPressed: () async{
+            IconButton(onPressed: () {
 
-              await CatogoryDb().delteCatogory(catogoryModel);
+              CatogoryDb().delteCatogory(catogoryModel);
               Navigator.of(context).pop();
               catogoryDeleteSnackBar(context,'Catogory');
             }, icon:const Icon(
               Icons.check,
               color: Colors.green,
+               size: 29,
             )),
             
            

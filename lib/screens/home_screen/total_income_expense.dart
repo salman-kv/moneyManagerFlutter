@@ -11,7 +11,7 @@ class TotalIncomeExpense extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ValueListenableBuilder(valueListenable: TransactionDb().allTransactionListener, builder: (context, value, child) {
-        List<GraphModel> ie=getGraphIEOnly();
+        List<GraphModel> ie=TransactionDb().incomeExpenceMonthlyTotal();
         return    Row(
         children: [
           totalBox(context, incomeColor, ie[0].sum),

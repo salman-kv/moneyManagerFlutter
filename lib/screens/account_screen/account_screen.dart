@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moneymanager/screens/account_screen/edit_profile.dart';
+import 'package:moneymanager/screens/all_transaction/deleted_screen.dart';
 import 'package:moneymanager/screens/privacy_policy/privacy_screen.dart';
 
 class AccountScreen extends StatelessWidget {
@@ -56,7 +57,11 @@ class AccountScreen extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    TextButton.icon(onPressed: (){}, icon: Icon(Icons.delete), label: Text('Cleare All'))
+                    TextButton.icon(onPressed: (){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (ctx){
+                        return DeletedScreen();
+                      }));
+                    }, icon: Icon(Icons.delete), label: Text('Cleare All'))
                   ],
                 ),
                 // Row(

@@ -149,7 +149,7 @@ Future<void> longpress(BuildContext context,TransactionModel transactionModel) {
                 )),
             IconButton(
                 onPressed: () async {
-                  TransactionDb().deleteTransaction(transactionModel.id!);
+                  TransactionDb().deleteTransaction(transactionModel);
                   Navigator.of(context).pop();
                   catogoryDeleteSnackBar(context, 'Transaction'); 
                 },
