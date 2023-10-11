@@ -6,19 +6,19 @@ part 'transaction_model.g.dart';
 @HiveType(typeId: 3)
 class TransactionModel {
   @HiveField(0)
-  final String porpose;
+   String porpose;
 
   @HiveField(1)
-  final double amount;
+   double amount;
 
   @HiveField(2)
-  final DateTime dateTime;
+   DateTime dateTime;
 
   @HiveField(3)
-  final CatogoryType catogoryType;
+  CatogoryType catogoryType;
 
   @HiveField(4)
-  final CatogoryModel catogoryModel;
+   CatogoryModel catogoryModel;
 
   @HiveField(5)
   String? id;

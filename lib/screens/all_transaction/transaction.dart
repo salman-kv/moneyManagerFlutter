@@ -10,6 +10,12 @@ import 'package:moneymanager/screens/all_transaction/sort_filter/sort.dart';
 import 'package:moneymanager/screens/common_widget/search.dart';
 
 ValueNotifier<int> selectListener = ValueNotifier(0);
+ValueNotifier<DateTime> transactionFilterStartDate =
+    ValueNotifier(TransactionDb().startDateFilter!);
+ValueNotifier<DateTime> transactionFilterEndDate =
+    ValueNotifier(DateTime.now());
+ValueNotifier<String> transactionFilterSelectedCatogory = ValueNotifier('');
+ValueNotifier<int> transactionFilterSelectedCatogoryIndex = ValueNotifier(-1);
 
 class AllTransactionScreen extends StatefulWidget {
   const AllTransactionScreen({super.key});
@@ -22,10 +28,15 @@ class _AllTransactionState extends State<AllTransactionScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _controller = TabController(length: 3, vsync: this);
 
+  int selectedpage=0;
+
   @override
   void initState() {
     TransactionDb().refreshUi();
     selectListener.value = 0;
+    transactionFilterStartDate.value = TransactionDb().startDateFilter!;
+    transactionFilterSelectedCatogory.value = '';
+    transactionFilterSelectedCatogoryIndex.value=-1;
     super.initState();
   }
 
@@ -52,8 +63,14 @@ class _AllTransactionState extends State<AllTransactionScreen>
               appBar: TabBar(
                   onTap: (value) {
                     setState(() {
+                      selectedpage=value;
                       TransactionDb().refreshUi();
-                      selectListener.value=0;
+                      selectListener.value = 0;
+                      transactionFilterStartDate.value =
+                          TransactionDb().startDateFilter!;
+                          transactionFilterEndDate.value=DateTime.now();
+                      transactionFilterSelectedCatogory.value = '';
+                      transactionFilterSelectedCatogoryIndex.value=-1;
                     });
                   },
                   indicatorColor: Colors.black,
@@ -127,7 +144,7 @@ class _AllTransactionState extends State<AllTransactionScreen>
                     color: Color.fromARGB(255, 255, 255, 255),
                     child: TextButton.icon(
                       onPressed: () {
-                        bottemFilter(context, size, _textTheme);
+                        bottemFilter(context, size, _textTheme,selectedpage);
                       },
                       icon: const Icon(
                         Icons.filter_list,
@@ -156,23 +173,26 @@ class _AllTransactionState extends State<AllTransactionScreen>
         context: context,
         builder: (ctx) {
           return Padding(
-            padding: EdgeInsets.all(8.0),
+            padding:const EdgeInsets.all(8.0),
             child: TransactionSort(selectedListener: selectListener.value),
           );
         });
   }
-   bottemFilter(BuildContext context, Size size, TextTheme textTheme) {
+
+ 
+}
+
+
+ bottemFilter(BuildContext context, Size size, TextTheme textTheme,int selectedpage) {
     return showModalBottomSheet(
         context: context,
         builder: (ctx) {
           return SizedBox(
-            height: size.height/2.5,
+            height: size.height / 2.5,
             child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: TransactionFilter(),
+              padding: const EdgeInsets.all(8.0),
+              child: TransactionFilter(selectedpage: selectedpage),
             ),
           );
         });
   }
-}
-

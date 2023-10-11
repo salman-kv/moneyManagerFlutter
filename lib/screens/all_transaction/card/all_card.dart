@@ -101,18 +101,21 @@ class AllCard extends StatelessWidget {
                     Text(
                       transactionModel.catogoryModel.name.titleCase,
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: transactionModel.catogoryType ==
-                                  CatogoryType.income
-                              ? incomeColor
-                              : expenseColor),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color:
+                            transactionModel.catogoryType == CatogoryType.income
+                                ? incomeColor
+                                : transactionModel.catogoryType ==
+                                        CatogoryType.expense
+                                    ? expenseColor
+                                    : const Color.fromARGB(255, 20, 77, 124),
+                      ),
                     )
                   ],
                 ),
               ),
-              // const SizedBox(width: 10,),
-              
+
               Container(
                 height: 50,
                 decoration: BoxDecoration(
@@ -125,7 +128,10 @@ class AllCard extends StatelessWidget {
                         color:
                             transactionModel.catogoryType == CatogoryType.income
                                 ? incomeColor
-                                : expenseColor,
+                                : transactionModel.catogoryType ==
+                                        CatogoryType.expense
+                                    ? expenseColor
+                                    : Color.fromARGB(255, 20, 77, 124),
                         fontWeight: FontWeight.bold,
                         fontSize: 20),
                   ),

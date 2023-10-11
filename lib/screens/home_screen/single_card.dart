@@ -17,18 +17,9 @@ class SingleCard extends StatefulWidget {
 }
 
 class _SingleCardState extends State<SingleCard> {
-  // final List<Widget> _list = [];
-
-  // @override
-  // void initState() {
-  //   for (var i = 0; i < 20; i++) {
-  //     _list.add(singleCard(i));
-  //   }
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
+    var m= MediaQuery.of(context).orientation;
     return ValueListenableBuilder(
       valueListenable: TransactionDb().allTransactionListener,
       builder: (BuildContext context, List<TransactionModel> newList, _) {
@@ -41,29 +32,15 @@ class _SingleCardState extends State<SingleCard> {
             : GridView.count(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                childAspectRatio: 1/1.1,
-                
-                crossAxisCount: 2,
+                childAspectRatio: m == Orientation.portrait ? 1 / 1.1 : 1 / 1.5,
+                crossAxisCount:  m == Orientation.portrait ? 2 : 4,
+                // childAspectRatio:    1 / 1.1,
+                // crossAxisCount: 2,
                 children: List.generate(
                     newList.length > 10 ? 10 : newList.length, (index) {
                   return singleCard(newList.reversed.toList()[index]);
                 }));
       },
-      // children: List.generate(_list.length, (index) {
-      //   return Dismissible(
-      //     key: UniqueKey(),
-      //     child: _list[index],
-      //     onDismissed: (direction) {
-      //       if (direction == DismissDirection.endToStart) {
-      //         setState(() {
-      //           _list.removeAt(index);
-      //         });
-      //       } else {
-      //         setState(() {});
-      //       }
-      //     },
-      //   );
-      // }),
     );
   }
 
@@ -100,7 +77,7 @@ class _SingleCardState extends State<SingleCard> {
                       color: const Color.fromARGB(255, 154, 154, 154)),
                 ),
                 Text(
-                  transactionModel.amount.toString(),
+                 ('₹${ transactionModel.amount.toString()}'),
                   style: _textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: const Color.fromARGB(214, 255, 255, 255)),
@@ -115,7 +92,7 @@ class _SingleCardState extends State<SingleCard> {
                 borderRadius: BorderRadius.circular(100),
                 color: transactionModel.catogoryType == CatogoryType.income
                     ? const Color.fromARGB(138, 200, 230, 201)
-                    : const Color.fromARGB(49, 195, 103, 69),
+                    :transactionModel.catogoryType == CatogoryType.expense  ? const Color.fromARGB(49, 195, 103, 69) : Color.fromARGB(255, 1, 40, 54),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -126,15 +103,17 @@ class _SingleCardState extends State<SingleCard> {
                         color: transactionModel.catogoryType ==
                                 CatogoryType.expense
                             ? const Color.fromARGB(135, 255, 255, 255)
-                            : Colors.black),
+                            :transactionModel.catogoryType ==
+                                CatogoryType.income ? Colors.black : const Color.fromARGB(255, 171, 169, 162) ) ,
                   ),
                   Text(
                     DateFormat.MMM().format(transactionModel.dateTime),
                     style: _textTheme.bodyLarge?.copyWith(
-                        color: transactionModel.catogoryType ==
+                        color:transactionModel.catogoryType ==
                                 CatogoryType.expense
                             ? const Color.fromARGB(135, 255, 255, 255)
-                            : Colors.black),
+                            :transactionModel.catogoryType ==
+                                CatogoryType.income ? Colors.black : const Color.fromARGB(255, 171, 169, 162)),
                   ),
                 ],
               ),
@@ -149,14 +128,21 @@ class _SingleCardState extends State<SingleCard> {
                         color: incomeColor,
                       ),
                     )
-                  : SizedBox(
+                  : transactionModel.catogoryType == CatogoryType.income ? SizedBox(
                       width: 20,
                       height: 20,
                       child: Image.asset(
                         'icons/expense.png',
                         color: expenseColor,
                       ),
-                    ),
+                    ) : SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: Image.asset(
+                        'icons/expense.png',
+                        color: const  Color.fromARGB(255, 222, 222, 222),
+                      ),
+                    )
             ),
             SizedBox(
               width: double.infinity,
@@ -167,12 +153,17 @@ class _SingleCardState extends State<SingleCard> {
                       style: _textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w500, color: incomeColor),
                     )
-                  : Text(
+                  :transactionModel.catogoryType == CatogoryType.expense ? Text(
                       'Expense',
                       textAlign: TextAlign.center,
                       style: _textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w500, color: expenseColor),
-                    ),
+                    ) : Text(
+                      'Undifined',
+                      textAlign: TextAlign.center,
+                      style: _textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w500, color: const Color.fromARGB(255, 222, 222, 222)),
+                    ) 
             ),
           ],
         ),

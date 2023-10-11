@@ -60,6 +60,8 @@ class CatogoryTypeAdapter extends TypeAdapter<CatogoryType> {
         return CatogoryType.income;
       case 1:
         return CatogoryType.expense;
+      case 2:
+        return CatogoryType.undifined;
       default:
         return CatogoryType.income;
     }
@@ -73,6 +75,9 @@ class CatogoryTypeAdapter extends TypeAdapter<CatogoryType> {
         break;
       case CatogoryType.expense:
         writer.writeByte(1);
+        break;
+      case CatogoryType.undifined:
+        writer.writeByte(2);
         break;
     }
   }

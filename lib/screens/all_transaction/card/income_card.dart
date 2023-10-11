@@ -108,7 +108,7 @@ class IncomeCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Center(
-                    child: Text('${transactionModel.amount}',
+                    child: Text('₹${transactionModel.amount}',
                         style: TextStyle(
                       color: incomeColor,
                       fontWeight: FontWeight.bold,
@@ -125,7 +125,6 @@ class IncomeCard extends StatelessWidget {
 }
 
 Future<void> longpress(BuildContext context,TransactionModel transactionModel) {
-  print(transactionModel.catogoryModel.name);
   return showDialog(
       context: context,
       builder: ((context) {

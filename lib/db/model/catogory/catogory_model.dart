@@ -10,6 +10,9 @@ enum CatogoryType {
 
   @HiveField(1)
   expense,
+
+  @HiveField(2)
+  undifined
 }
 
 

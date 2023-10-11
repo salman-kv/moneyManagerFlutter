@@ -40,7 +40,7 @@ class CatogoryCard extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                deleteAlartSnackbar(context, 'delete',singleList);
+                deleteAlartOnCatogory(context,singleList);
               },
               icon: const Icon(Icons.delete),
             )
@@ -49,12 +49,12 @@ class CatogoryCard extends StatelessWidget {
       ),
     );
   }
-  Future<void> deleteAlartSnackbar(BuildContext context, String name,CatogoryModel catogoryModel) {
+  Future<void> deleteAlartOnCatogory(BuildContext context,CatogoryModel catogoryModel) {
   return showDialog(
       context: context,
       builder: (ctx) {
         return AlertDialog(
-          title: Text('do you want to $name'),
+          title: Text('Do you want to delete  "  ${catogoryModel.name}  "'),
           actions:  [
             IconButton(onPressed: (){
               Navigator.of(context).pop();
@@ -62,8 +62,9 @@ class CatogoryCard extends StatelessWidget {
               Icons.close,
               color: Colors.red,
             ),),
-            IconButton(onPressed: (){
-              CatogoryDb().delteCatogory(catogoryModel.id);
+            IconButton(onPressed: () async{
+
+              await CatogoryDb().delteCatogory(catogoryModel);
               Navigator.of(context).pop();
               catogoryDeleteSnackBar(context,'Catogory');
             }, icon:const Icon(

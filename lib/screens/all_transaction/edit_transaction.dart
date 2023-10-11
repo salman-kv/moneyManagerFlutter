@@ -51,6 +51,142 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                     key: _key,
                     child: Column(
                       children: [
+                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Row(
+                              children: [
+                                Radio(
+                                  value: radioSelect,
+                                  groupValue: CatogoryType.income,
+                                  onChanged: (val) {
+                                    setState(() {
+                                      radioSelect = CatogoryType.income;
+                                      dropdownvalue = null;
+                                      catogoryModel=null;
+                                    });
+                                  },
+                                ),
+                                const Text('INCOME')
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Radio(
+                                  value: radioSelect,
+                                  groupValue: CatogoryType.expense,
+                                  onChanged: (val) {
+                                    setState(() {
+                                      radioSelect = CatogoryType.expense;
+                                      dropdownvalue = null;
+                                      catogoryModel=null;
+                                    });
+                                  },
+                                ),
+                                const Text(
+                                  'EXPENSE',
+                                )
+                              ],
+                            ),
+                              Row(
+                                  children: [
+                                    Radio(
+                                      value: radioSelect,
+                                      groupValue: CatogoryType.undifined,
+                                      onChanged: (val) {
+                                        setState(() {
+                                          radioSelect = CatogoryType.undifined;
+                                          dropdownvalue = null;
+                                          catogoryModel = null;
+                                        });
+                                      },
+                                    ),
+                                    const Text(
+                                      'Other',
+                                    )
+                                  ],
+                                ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'CATOGORY :',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w500),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              height: 40,
+                              width: 200,
+                              decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 219, 219, 219),
+                                  borderRadius: BorderRadius.circular(50)),
+                              child: Center(
+                                child: DropdownButton(
+                                    hint: const Text('select'),
+                                    value: dropdownvalue,
+                                    style: const TextStyle(
+                                        color: Colors.black, fontSize: 17),
+                                    items: radioSelect == CatogoryType.income
+                                            ? CatogoryDb()
+                                                .incomeCatogoryListtner
+                                                .value
+                                                .map((e) {
+                                                return DropdownMenuItem(
+                                                  onTap: () {
+                                                    catogoryModel = e;
+                                                  },
+                                                  value: e.id,
+                                                  child: Text(e.name),
+                                                );
+                                              }).toList()
+                                            : radioSelect == CatogoryType.expense ?CatogoryDb()
+                                                .expenseCatogoryListener
+                                                .value
+                                                .map((e) {
+                                                return DropdownMenuItem(
+                                                  onTap: () {
+                                                    catogoryModel = e;
+                                                  },
+                                                  value: e.id,
+                                                  child: Text(e.name),
+                                                );
+                                              }).toList() : CatogoryDb()
+                                                .toatalCatogoryListener
+                                                .value
+                                                .map((e) {
+                                                return DropdownMenuItem(
+                                                  onTap: () {
+                                                    catogoryModel = e;
+                                                  },
+                                                  value: e.id,
+                                                  child: Text(e.name),
+                                                );
+                                              }).toList(),
+                                    onChanged: (val) {
+                                      setState(() {
+                                        dropdownvalue = val;
+                                      });
+                                    }),
+                              ),
+                            )
+                          ],
+                        ),
+                        Visibility(
+                          visible: catogoryIsSelected,
+                          child:const Text(
+                            'Select Catogory',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: TextFormField(
@@ -111,110 +247,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                             ),
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Row(
-                              children: [
-                                Radio(
-                                  value: radioSelect,
-                                  groupValue: CatogoryType.income,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      radioSelect = CatogoryType.income;
-                                      dropdownvalue = null;
-                                      catogoryModel=null;
-                                    });
-                                  },
-                                ),
-                                const Text('INCOME')
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Radio(
-                                  value: radioSelect,
-                                  groupValue: CatogoryType.expense,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      radioSelect = CatogoryType.expense;
-                                      dropdownvalue = null;
-                                      catogoryModel=null;
-                                    });
-                                  },
-                                ),
-                                const Text(
-                                  'EXPENSE',
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'CATOGORY :',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w500),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              height: 40,
-                              width: 200,
-                              decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(255, 219, 219, 219),
-                                  borderRadius: BorderRadius.circular(50)),
-                              child: Center(
-                                child: DropdownButton(
-                                    hint: const Text('select'),
-                                    value: dropdownvalue,
-                                    style: const TextStyle(
-                                        color: Colors.black, fontSize: 17),
-                                    items: radioSelect == CatogoryType.income
-                                        ? CatogoryDb()
-                                            .incomeCatogoryListtner
-                                            .value
-                                            .map((e) {
-                                            return DropdownMenuItem(
-                                              onTap: () {
-                                                catogoryModel = e;
-                                              },
-                                              value: e.id,
-                                              child: Text(e.name),
-                                            );
-                                          }).toList()
-                                        : CatogoryDb()
-                                            .expenseCatogoryListener
-                                            .value
-                                            .map((e) {
-                                            return DropdownMenuItem(
-                                              onTap: () {
-                                                catogoryModel = e;
-                                              },
-                                              value: e.id,
-                                              child: Text(e.name),
-                                            );
-                                          }).toList(),
-                                    onChanged: (val) {
-                                      setState(() {
-                                        dropdownvalue = val;
-                                      });
-                                    }),
-                              ),
-                            )
-                          ],
-                        ),
-                        Visibility(
-                          visible: catogoryIsSelected,
-                          child:const Text(
-                            'Select Catogory',
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        ),
+                       
                         const SizedBox(
                           height: 10,
                         ),

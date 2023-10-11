@@ -35,6 +35,7 @@ dependencies:
   hive_flutter: ^1.1.0
   intl: ^0.18.1
   recase: ^4.1.0
+  simple_chips_input: ^1.1.0
   syncfusion_flutter_charts: ^23.1.36
   url_launcher: ^6.1.14
 

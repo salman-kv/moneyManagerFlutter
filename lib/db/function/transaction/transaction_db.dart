@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:moneymanager/db/model/catogory/catogory_model.dart';
 import 'package:moneymanager/db/model/transaction/transaction_model.dart';
-import 'package:moneymanager/screens/graph/graph_model/graph_model.dart';
+import 'package:moneymanager/db/model/graph/graph_model.dart';
 
 const TRANSACTION_DB_NAME = 'transaction-db';
 
@@ -14,7 +14,7 @@ abstract class TransactionDbFunctions {
 }
 
 class TransactionDb implements TransactionDbFunctions {
-  DateTime? startDateFilter;
+  DateTime? startDateFilter=DateTime.now();
   ValueNotifier<List<TransactionModel>> allTransactionListener =
       ValueNotifier([]);
   ValueNotifier<List<TransactionModel>> incomeTransactionListener =
@@ -47,6 +47,9 @@ class TransactionDb implements TransactionDbFunctions {
     incomeTransactionListener.value.clear();
     expenceTransactionListener.value.clear();
     final values = await getTransaction();
+    // values.forEach((element) {
+    //   print(element.porpose);
+    // });
     await Future.forEach(
       values,
       (element) {
@@ -59,21 +62,21 @@ class TransactionDb implements TransactionDbFunctions {
         }
       },
     );
-    List<TransactionModel> temp=[];
+      List<TransactionModel> temp = [];
+   
+  
     temp.addAll(allTransactionListener.value);
     temp.sort((a, b) => a.dateTime.compareTo(b.dateTime));
     print(temp[0].dateTime);
-    startDateFilter=temp[0].dateTime;
-  //   var temp=allTransactionListener;
-  //  temp.value.sort((a, b) => a.dateTime.compareTo(b.dateTime));
-  //  print(temp.value[0].dateTime);
+    startDateFilter = temp[0].dateTime;
+
     allTransactionListener.notifyListeners();
     incomeTransactionListener.notifyListeners();
     expenceTransactionListener.notifyListeners();
   }
 
   Future<void> serarchrefreshUi(String name) async {
-    List<TransactionModel> values = [];
+    List<TransactionModel> values =await getTransaction();
     values.addAll(allTransactionListener.value);
     allTransactionListener.value.clear();
     incomeTransactionListener.value.clear();
@@ -177,21 +180,101 @@ class TransactionDb implements TransactionDbFunctions {
     }
   }
 
-  Future<void> graphSum() async {
-    graphDataListene.value.clear();
-    double sumIncome = 0;
-    double sumExpense = 0;
-    allTransactionListener.value.forEach((element) {
-      if (element.catogoryType == CatogoryType.income) {
-        sumIncome += element.amount;
-      } else {
-        sumExpense += element.amount;
+  // Future<void> graphSum() async {
+  //   graphDataListene.value.clear();
+  //   double sumIncome = 0;
+  //   double sumExpense = 0;
+  //   allTransactionListener.value.forEach((element) {
+  //     if (element.catogoryType == CatogoryType.income) {
+  //       sumIncome += element.amount;
+  //     } else {
+  //       sumExpense += element.amount;
+  //     }
+  //   });
+  //   var val = GraphModel(sum: sumIncome, name: 'Income');
+  //   var val1 = GraphModel(sum: sumExpense, name: 'Expence');
+  //   graphDataListene.value.add(val);
+  //   graphDataListene.value.add(val1);
+  //   graphDataListene.notifyListeners();
+  // }
+
+  Future<void> transactionFilterOnlyDate(
+      DateTime startDate, DateTime endDate) async {
+        await refreshUi();
+    List<TransactionModel> tempFilter = [];
+    tempFilter.addAll(allTransactionListener.value);
+        // tempFilter.forEach((element) {print(element.porpose);});
+    
+    expenceTransactionListener.value.clear();
+    incomeTransactionListener.value.clear();
+
+    allTransactionListener.value.clear();
+   Future.forEach(tempFilter, (element) {
+
+      if ((element.dateTime.isBefore(endDate) &&   element.dateTime.isAfter(startDate)) || element.dateTime == startDate || element.dateTime == endDate) {
+        allTransactionListener.value.add(element);
+        if (element.catogoryType == CatogoryType.income) {
+          incomeTransactionListener.value.add(element);
+        } else {
+          expenceTransactionListener.value.add(element);
+        }
       }
+      else{
+        print('not enter --- ${element.porpose}');
+      }
+      
     });
-    var val = GraphModel(sum: sumIncome, name: 'Income');
-    var val1 = GraphModel(sum: sumExpense, name: 'Expence');
-    graphDataListene.value.add(val);
-    graphDataListene.value.add(val1);
-    graphDataListene.notifyListeners();
+
+    allTransactionListener.notifyListeners();
+    expenceTransactionListener.notifyListeners();
+    incomeTransactionListener.notifyListeners();
+  }
+
+    Future<void> transactionFilterWithCatogory(
+      DateTime startDate, DateTime endDate,String catogory) async {
+        await refreshUi();
+    List<TransactionModel> tempFilter = [];
+    tempFilter.addAll(allTransactionListener.value);
+    
+    expenceTransactionListener.value.clear();
+    incomeTransactionListener.value.clear();
+    allTransactionListener.value.clear();
+
+    Future.forEach(tempFilter, (element) {
+  
+      if ((element.dateTime.isBefore(endDate) && element.dateTime.isAfter(startDate) && element.catogoryModel.name==catogory) || (element.dateTime == startDate && element.catogoryModel.name==catogory) || (element.dateTime == endDate && element.catogoryModel.name==catogory)) {
+        allTransactionListener.value.add(element);
+       
+        if (element.catogoryType == CatogoryType.income) {
+          incomeTransactionListener.value.add(element);
+        } else {
+          expenceTransactionListener.value.add(element);
+        }
+      }
+      
+    });
+
+    allTransactionListener.notifyListeners();
+    expenceTransactionListener.notifyListeners();
+    incomeTransactionListener.notifyListeners();
   }
 }
+
+
+
+
+
+    // tempFilter.forEach((element) {
+    //   print('sdaf');
+    //   if ((element.dateTime.isBefore(endDate) &&
+    //           element.dateTime.isAfter(startDate)) ||
+    //       element.dateTime == startDate ||
+    //       element.dateTime == endDate) {
+    //     allTransactionListener.value.add(element);
+    //     if (element.catogoryType == CatogoryType.income) {
+    //       incomeTransactionListener.value.add(element);
+    //     } else {
+    //       expenceTransactionListener.value.add(element);
+    //     }
+    //   }
+    // });

@@ -512,6 +512,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  simple_chips_input:
+    dependency: "direct main"
+    description:
+      name: simple_chips_input
+      sha256: "758c2439c74f9105ebb18407095c028e247631108195c38480ea3fb4967c8f6f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   sky_engine:
     dependency: transitive
     description: flutter

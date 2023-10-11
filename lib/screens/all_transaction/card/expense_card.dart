@@ -110,7 +110,7 @@ class ExpenseCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Center(
-                    child: Text('${transactionModel.amount}',
+                    child: Text('₹${transactionModel.amount}',
                       style: TextStyle(
                       color: expenseColor,
                       fontWeight: FontWeight.bold,
