@@ -13,20 +13,21 @@ import 'package:moneymanager/screens/home_screen/home_page.dart';
 //main page here i want to change the body and the appbar name
 
 class MainPage extends StatefulWidget {
-   MainPage({super.key});
+  MainPage({super.key});
 
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-  int val=2;
+  int val = 0;
   final pages = const [
-     AllTransactionScreen(),
-    CatogoryIncome(),
-     HomePage(),
+    HomePage(),
+    AllTransactionScreen(),
     GraphScreen(),
-     AccountScreen(),
+    CatogoryIncome(),
+
+    //  AccountScreen(),
   ];
 
   @override
@@ -36,7 +37,6 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppbar(),
@@ -52,18 +52,6 @@ class _MainPageState extends State<MainPage> {
           animationDuration: const Duration(milliseconds: 500),
           items: const [
             CurvedNavigationBarItem(
-                child: FaIcon(
-                  FontAwesomeIcons.moneyCheckDollar,
-                  color: Colors.white,
-                ),
-                label: 'Transaction',
-                labelStyle: TextStyle(color: Colors.white)),
-            CurvedNavigationBarItem(
-                child:
-                    Icon(Icons.grid_view_sharp, color: Colors.white, size: 30),
-                label: 'Catogory',
-                labelStyle: TextStyle(color: Colors.white)),
-            CurvedNavigationBarItem(
                 child: Icon(
                   Icons.home,
                   color: Colors.white,
@@ -73,15 +61,29 @@ class _MainPageState extends State<MainPage> {
                 labelStyle: TextStyle(color: Colors.white)),
             CurvedNavigationBarItem(
                 child: FaIcon(
+                  FontAwesomeIcons.moneyCheckDollar,
+                  color: Colors.white,
+                ),
+                label: 'Transaction',
+                labelStyle: TextStyle(color: Colors.white)),
+
+            CurvedNavigationBarItem(
+                child: FaIcon(
                   FontAwesomeIcons.chartPie,
                   color: Colors.white,
                 ),
                 label: 'Graph',
                 labelStyle: TextStyle(color: Colors.white)),
             CurvedNavigationBarItem(
-                child: Icon(Icons.person, color: Colors.white, size: 30),
-                label: 'User',
+                child:
+                    Icon(Icons.grid_view_sharp, color: Colors.white, size: 30),
+                label: 'Catogory',
                 labelStyle: TextStyle(color: Colors.white)),
+
+            // CurvedNavigationBarItem(
+            //     child: Icon(Icons.person, color: Colors.white, size: 30),
+            //     label: 'User',
+            //     labelStyle: TextStyle(color: Colors.white)),
           ],
           onTap: (index) {
             setState(() {

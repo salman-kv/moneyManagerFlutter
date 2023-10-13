@@ -114,28 +114,35 @@ class _MyHomePageState extends State<CatogoryIncome>
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (_controller.index == 0) {
-            Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
-              return AddCatogory(
-                type: CatogoryType.income,
-              );
-            }));
-          } else {
-            Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
-              return AddCatogory(
-                type: CatogoryType.expense,
-              );
-            }));
-          }
-        },
-        backgroundColor: _controller.index == 0 ? incomeColor : expenseColor,
-        child: const Icon(
-          Icons.add,
-          size: 30,
+      floatingActionButton: SizedBox(
+        height: 45,
+        width: 45,
+        child: FittedBox(
+          child: FloatingActionButton(
+            onPressed: () {
+              if (_controller.index == 0) {
+                Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+                  return AddCatogory(
+                    type: CatogoryType.income,
+                  );
+                }));
+              } else {
+                Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+                  return AddCatogory(
+                    type: CatogoryType.expense,
+                  );
+                }));
+              }
+            },
+            backgroundColor: _controller.index == 0 ? incomeColor : expenseColor,
+            child: const Icon(
+              Icons.add,
+              size: 30,
+            ),
+          ),
         ),
       ),
+      floatingActionButtonLocation:FloatingActionButtonLocation.centerFloat,
     );
   }
 }

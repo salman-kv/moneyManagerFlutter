@@ -53,7 +53,6 @@ class DeletedCard extends StatelessWidget {
           longpressDelete(context, transactionModel);
         },
         child: Container(
-          height: 70,
           decoration: BoxDecoration(
             boxShadow: const [
               BoxShadow(
@@ -95,26 +94,33 @@ class DeletedCard extends StatelessWidget {
               const SizedBox(
                 width: 5,
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(transactionModel.porpose.titleCase,
-                      style: const TextStyle(
-                          fontSize: 21, fontWeight: FontWeight.w500)),
-                  Text(
-                    transactionModel.catogoryModel.name.titleCase,
-                    style: TextStyle(
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(transactionModel.porpose.titleCase,
+                        maxLines: 3,
+                        style: const TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.w500)),
+                    Text(
+                      transactionModel.catogoryModel.name.titleCase,
+                      style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                         color:
                             transactionModel.catogoryType == CatogoryType.income
                                 ? incomeColor
-                                : expenseColor),
-                  )
-                ],
+                                : transactionModel.catogoryType ==
+                                        CatogoryType.expense
+                                    ? expenseColor
+                                    : const Color.fromARGB(255, 20, 77, 124),
+                      ),
+                    )
+                  ],
+                ),
               ),
-              const Spacer(),
+
               Container(
                 height: 50,
                 decoration: BoxDecoration(
@@ -127,7 +133,10 @@ class DeletedCard extends StatelessWidget {
                         color:
                             transactionModel.catogoryType == CatogoryType.income
                                 ? incomeColor
-                                : expenseColor,
+                                : transactionModel.catogoryType ==
+                                        CatogoryType.expense
+                                    ? expenseColor
+                                    : Color.fromARGB(255, 20, 77, 124),
                         fontWeight: FontWeight.bold,
                         fontSize: 20),
                   ),
@@ -159,6 +168,7 @@ Future<void> longpressDelete(
             IconButton(
                 onPressed: () async {
                   Navigator.of(context).pop();
+                  restoreSnack(context);
                   await TransactionDb().restoreDeletedTransaction(transactionModel);
                 },
                 icon: const Icon(
@@ -177,4 +187,15 @@ Future<void> longpressDelete(
           ],
         );
       }));
+}
+
+restoreSnack(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(
+   const SnackBar(
+      content: Text('Transaction Restored Successfully'),
+      backgroundColor: Colors.green,
+      margin: EdgeInsets.all(10),
+      behavior: SnackBarBehavior.floating,
+  ),);
+
 }

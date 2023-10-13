@@ -28,6 +28,17 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+           const  Padding(
+            padding:  EdgeInsets.all(8.0),
+            child:  Text(
+                  'My Target',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Color.fromARGB(175, 0, 0, 0),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+          ),
           const TargetWidget(),
           const SizedBox(
             height: 10,
@@ -37,7 +48,7 @@ class _HomePageState extends State<HomePage> {
             child:  Text(
                   'Balance',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     color: Color.fromARGB(175, 0, 0, 0),
                     fontWeight: FontWeight.w600,
                   ),

@@ -264,7 +264,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                               child: const Text('ADD')),
                         ),
                       ],
-                    )),
+                    ))
               ],
             )),
       ),
@@ -283,12 +283,12 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     if (purposeText.isEmpty) {
       return;
     }
-    if (amountText.isEmpty) {
+    if (amountText.isEmpty || double.parse(amountText)<0) {
       return;
     }
     final parsedAmount = double.tryParse(amountText);
 
-    if (parsedAmount == null) {
+    if (parsedAmount == null ) {
       return;
     }
 

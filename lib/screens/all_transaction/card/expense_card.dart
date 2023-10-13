@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:moneymanager/db/function/transaction/transaction_db.dart';
+import 'package:moneymanager/db/model/catogory/catogory_model.dart';
 import 'package:moneymanager/db/model/transaction/transaction_model.dart';
-import 'package:moneymanager/screens/all_transaction/card/income_card.dart';
+import 'package:moneymanager/screens/all_transaction/edit_transaction.dart';
+import 'package:moneymanager/screens/catogory/catogory_income.dart';
 import 'package:moneymanager/theme/theme_constants.dart';
 import 'package:recase/recase.dart';
 
@@ -38,16 +40,15 @@ class ExpenseCard extends StatelessWidget {
     );
   }
 
-  Widget expenseCard(BuildContext context,TransactionModel transactionModel) {
+    Widget expenseCard(BuildContext context, TransactionModel transactionModel) {
     final _textTheme = textTheme;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onLongPress: () {
-          longpress(context,transactionModel);
+          longpress(context, transactionModel);
         },
         child: Container(
-          height: 70,
           decoration: BoxDecoration(
             boxShadow: const [
               BoxShadow(
@@ -69,7 +70,7 @@ class ExpenseCard extends StatelessWidget {
                 height: 50,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
-                  color: const Color.fromARGB(49, 195, 103, 69),
+                  color: const Color.fromARGB(50, 4, 45, 114),
                 ),
                 margin: const EdgeInsets.all(0),
                 child: Column(
@@ -89,40 +90,116 @@ class ExpenseCard extends StatelessWidget {
               const SizedBox(
                 width: 5,
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(transactionModel.porpose.titleCase, style: _textTheme.titleLarge ),
-                  Text(
-                    transactionModel.catogoryModel.name.titleCase,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color:expenseColor
-                    ),
-                  )
-                ],
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(transactionModel.porpose.titleCase,
+                        maxLines: 3,
+                        style: const TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.w500)),
+                    Text(
+                      transactionModel.catogoryModel.name.titleCase,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color:
+                            transactionModel.catogoryType == CatogoryType.income
+                                ? incomeColor
+                                : transactionModel.catogoryType ==
+                                        CatogoryType.expense
+                                    ? expenseColor
+                                    : const Color.fromARGB(255, 20, 77, 124),
+                      ),
+                    )
+                  ],
+                ),
               ),
-              const Spacer(),
+
               Container(
                 height: 50,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Center(
-                    child: Text('₹${transactionModel.amount}',
-                      style: TextStyle(
-                      color: expenseColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20
-                    ),
-                        
-                        )),
+                  child: Text(
+                    '${transactionModel.amount}',
+                    style: TextStyle(
+                        color:
+                            transactionModel.catogoryType == CatogoryType.income
+                                ? incomeColor
+                                : transactionModel.catogoryType ==
+                                        CatogoryType.expense
+                                    ? expenseColor
+                                    : Color.fromARGB(255, 20, 77, 124),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
+                  ),
+                ),
               ),
+              const SizedBox(
+                width: 10,
+              ),
+              // transactionModel.catogoryType==CatogoryType.income
+              //     ? Container(
+              //       height: 10,
+              //       width: 10,
+              //       decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(50),
+              //         color: incomeColor
+              //       ),
+              //     )
+              //     :  Container(
+              //       height: 10,
+              //       width: 10,
+              //       decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(50),
+              //         color: expenseColor
+              //       ),
+              //     ),
             ],
           ),
         ),
       ),
     );
   }
+  Future<void> longpress(BuildContext context,TransactionModel transactionModel) {
+  return showDialog(
+      context: context,
+      builder: ((context) {
+        return AlertDialog(
+          title:const Text(
+            'Delete or Edit',
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
+          ),
+          actions: [
+            IconButton(
+                onPressed: () async {
+                  await Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (ctx) {
+                    return  EditTransactionScreen(transactionModel: transactionModel,);
+                  }));
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(
+                  Icons.edit,
+                )),
+            IconButton(
+                onPressed: () async {
+                  TransactionDb().deleteTransaction(transactionModel);
+                  Navigator.of(context).pop();
+                  catogoryDeleteSnackBar(context, 'Transaction'); 
+                },
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                )),
+          ],
+        );
+      }));
+}
+
 }

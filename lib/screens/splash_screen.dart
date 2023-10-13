@@ -24,7 +24,19 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: moneymanager(40)),
+      body: Center(child: ColoredBox(
+        color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // moneymanager(40),
+            Image.asset('assets/images/icons8-wallet.gif'),
+            const SizedBox(height: 20,),
+            moneymanager(20),
+      
+          ],
+        ),
+      )),
     );
   }
 }

@@ -124,7 +124,7 @@ class _SingleCardState extends State<SingleCard> {
                       width: 20,
                       height: 20,
                       child: Image.asset(
-                        'icons/income.png',
+                        'assets/icons/income.png',
                         color: incomeColor,
                       ),
                     )
@@ -132,14 +132,14 @@ class _SingleCardState extends State<SingleCard> {
                       width: 20,
                       height: 20,
                       child: Image.asset(
-                        'icons/expense.png',
+                        'assets/icons/expense.png',
                         color: expenseColor,
                       ),
                     ) : SizedBox(
                       width: 20,
                       height: 20,
                       child: Image.asset(
-                        'icons/expense.png',
+                        'assets/icons/expense.png',
                         color: Color.fromARGB(255, 19, 96, 178),
                       ),
                     )

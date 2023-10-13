@@ -289,7 +289,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
     if (purposeText.isEmpty) {
       return;
     }
-    if (amountText.isEmpty) {
+    if (amountText.isEmpty || int.parse(amountText)<0) {
       return;
     }
 

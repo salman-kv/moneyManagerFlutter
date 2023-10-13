@@ -32,7 +32,7 @@ class _GraphScreenState extends State<GraphScreen> {
           body: ValueListenableBuilder(
             valueListenable: TransactionDb().allTransactionListener,
             builder: (context, value, child) {
-              return SfCircularChart(
+              return TransactionDb().allTransactionListener.value.isNotEmpty ?  SfCircularChart(
                 tooltipBehavior: TooltipBehavior(enable: true),
                 title: ChartTitle(
                   text: 'Statistics',
@@ -44,7 +44,7 @@ class _GraphScreenState extends State<GraphScreen> {
                 series: <CircularSeries>[
                   PieSeries<GraphModel, String>(
                     pointColorMapper: (datum, index) {
-                      return index==0 ? incomeColor : index==1 ? expenseColor : Color.fromARGB(255, 26, 68, 103);
+                      return index==0 ? incomeColor : index==1 ? expenseColor : const Color.fromARGB(255, 26, 68, 103);
                     },
                     dataSource: getGraphIEOnly(),
                     xValueMapper: (GraphModel datum, index) {
@@ -70,7 +70,11 @@ class _GraphScreenState extends State<GraphScreen> {
                     isVisible: true,
                     position: LegendPosition.left,
                     alignment: ChartAlignment.center),
-              );
+              ) : const Center(child: Text('no data',style: TextStyle(
+                color: Colors.red,
+                fontSize: 18,
+                fontWeight: FontWeight.bold
+              ),));
             },
           ),
           floatingActionButton: FloatingActionButton(
@@ -79,14 +83,15 @@ class _GraphScreenState extends State<GraphScreen> {
               bottemFilterGraph(context, MediaQuery.of(context).size,
                   Theme.of(context).textTheme, 0);
             },
-            child: const FaIcon(FontAwesomeIcons.sort),
+            // child: const FaIcon(FontAwesomeIcons.filter),
+            child: const Icon(Icons.filter_alt),
           ),
         ),
         Scaffold(
           body: ValueListenableBuilder(
             valueListenable: TransactionDb().allTransactionListener,
             builder: (context, value, child) {
-              return SfCircularChart(
+              return  TransactionDb().allTransactionListener.value.isNotEmpty ? SfCircularChart(
                 tooltipBehavior: TooltipBehavior(enable: true),
                 title: ChartTitle(
                   text: 'Statistics On Catogory Base',
@@ -121,7 +126,11 @@ class _GraphScreenState extends State<GraphScreen> {
                     isVisible: true,
                     position: LegendPosition.left,
                     alignment: ChartAlignment.center),
-              );
+              ) : const Center(child: Text('no data',style: TextStyle(
+                color: Colors.red,
+                fontSize: 18,
+                fontWeight: FontWeight.bold
+              ),));
             },
           ),
           floatingActionButton: FloatingActionButton(
@@ -130,7 +139,7 @@ class _GraphScreenState extends State<GraphScreen> {
               bottemFilterGraph(context, MediaQuery.of(context).size,
                   Theme.of(context).textTheme, 0);
             },
-            child: const FaIcon(FontAwesomeIcons.sort),
+            child: const Icon(Icons.filter_alt),
           ),
         ),
       ],

@@ -28,7 +28,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
           Center(child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              moneymanager(20),
+              moneymanager(18),
             ],
           )),
          

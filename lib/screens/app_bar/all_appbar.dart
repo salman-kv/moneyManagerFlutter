@@ -35,8 +35,8 @@ class AllAppbar extends StatelessWidget implements PreferredSizeWidget {
                 headname==null? '' : '$headname',
                 style:const TextStyle(
                   
-                  fontSize: 25,
-                  fontWeight:FontWeight.w600,
+                  fontSize: 20,
+                  fontWeight:FontWeight.w800,
                 ),
               ),
             ],

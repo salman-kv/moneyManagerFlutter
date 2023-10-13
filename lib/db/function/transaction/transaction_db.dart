@@ -110,6 +110,9 @@ class TransactionDb implements TransactionDbFunctions {
       deletedTransactionListener.value.add(element);
     });
     deletedTransactionListener.notifyListeners();
+    allTransactionListener.notifyListeners();
+    incomeTransactionListener.notifyListeners();
+    expenceTransactionListener.notifyListeners();
     refreshUi();
   }
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:moneymanager/screens/home_screen/add_target.dart';
-import 'package:moneymanager/theme/theme_constants.dart';
 
 class TargetWidget extends StatelessWidget {
   const TargetWidget({super.key});
@@ -17,8 +16,15 @@ class TargetWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
-          decoration: BoxDecoration(
-            boxShadow: const [
+          decoration: const BoxDecoration(
+            color: Color.fromARGB(215, 0, 0, 0),
+            //     gradient: LinearGradient(colors: [
+
+            // Color.fromARGB(158, 11, 219, 11),
+            // Color.fromARGB(225, 254, 255, 255),
+
+            //     ]),
+            boxShadow: [
               BoxShadow(
                 color: Color.fromARGB(255, 141, 141, 141),
                 blurRadius: 4,
@@ -26,52 +32,78 @@ class TargetWidget extends StatelessWidget {
                 blurStyle: BlurStyle.normal,
               )
             ],
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-            color: containerColor,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           padding: const EdgeInsets.all(8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
+          child: ValueListenableBuilder(
+            valueListenable: targetModelListener,
+            builder: (context, value, child) {
+              return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'DATE 01/09/2023',
-                    style: _textTheme.labelSmall,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  SizedBox(
-                      width: 200,
-                      child: Text('Target', style: _textTheme.titleLarge)),
-                ],
-              ),
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  color: const Color.fromARGB(138, 200, 230, 201),
-                ),
-                margin: const EdgeInsets.all(0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '10',
-                      style: _textTheme.bodyLarge,
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      value.target,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white
+                      ),
                     ),
-                    Text(
-                      'JAN',
-                      style: _textTheme.bodyLarge,
-                    )
-                  ],
-                ),
-              )
-            ],
+                  ),
+               value.target=='Add Target' ? Text('') :   Column(
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Row(
+                        children: [
+                          const Text(
+                            'Start In : ',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 166, 169, 175),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            ' ${value.startTime.day} - ${value.startTime.month} - ${value.startTime.year}',
+                            style: const TextStyle(
+                                fontSize: 16,
+                                color: Color.fromARGB(255, 166, 169, 175),
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      // const Text(' To ',style: TextStyle(
+                      //   color: Color.fromARGB(255, 11, 11, 11)
+                      // ),),
+
+                      Row(
+                        children: [
+                          const Text(
+                            'Achieve On  :  ',
+                            style:TextStyle(
+                                color: Color.fromARGB(255, 3, 172, 6),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                          Text(
+                            '${value.endTime.day} - ${value.endTime.month} - ${value.endTime.year}',
+                            style: const TextStyle(
+                                fontSize: 16,
+                                color: Color.fromARGB(255, 3, 172, 6),
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

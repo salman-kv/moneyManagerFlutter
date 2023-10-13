@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:moneymanager/db/function/transaction/transaction_db.dart';
+import 'package:moneymanager/db/model/catogory/catogory_model.dart';
 import 'package:moneymanager/db/model/transaction/transaction_model.dart';
 import 'package:moneymanager/screens/all_transaction/edit_transaction.dart';
 import 'package:moneymanager/screens/catogory/catogory_income.dart';
@@ -39,16 +40,15 @@ class IncomeCard extends StatelessWidget {
     );
   }
 
-  Widget incomeCard(BuildContext context, TransactionModel transactionModel) {
-    var _textTheme = textTheme;
+   Widget incomeCard(BuildContext context, TransactionModel transactionModel) {
+    final _textTheme = textTheme;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onLongPress: () {
-          longpress(context,transactionModel);
+          longpress(context, transactionModel);
         },
         child: Container(
-          height: 70,
           decoration: BoxDecoration(
             boxShadow: const [
               BoxShadow(
@@ -70,7 +70,7 @@ class IncomeCard extends StatelessWidget {
                 height: 50,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
-                  color: const Color.fromARGB(138, 200, 230, 201),
+                  color: const Color.fromARGB(50, 4, 45, 114),
                 ),
                 margin: const EdgeInsets.all(0),
                 child: Column(
@@ -90,31 +90,56 @@ class IncomeCard extends StatelessWidget {
               const SizedBox(
                 width: 5,
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(transactionModel.porpose.titleCase, style: _textTheme.titleLarge),
-                  Text(
-                    transactionModel.catogoryModel.name.titleCase,
-                    style: TextStyle(fontSize: 16, color: incomeColor),
-                  )
-                ],
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(transactionModel.porpose.titleCase,
+                        maxLines: 3,
+                        style: const TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.w500)),
+                    Text(
+                      transactionModel.catogoryModel.name.titleCase,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color:
+                            transactionModel.catogoryType == CatogoryType.income
+                                ? incomeColor
+                                : transactionModel.catogoryType ==
+                                        CatogoryType.expense
+                                    ? expenseColor
+                                    : const Color.fromARGB(255, 20, 77, 124),
+                      ),
+                    )
+                  ],
+                ),
               ),
-              const Spacer(),
+
               Container(
                 height: 50,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Center(
-                    child: Text('₹${transactionModel.amount}',
-                        style: TextStyle(
-                      color: incomeColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20
-                    ),
-                       )),
+                  child: Text(
+                    '${transactionModel.amount}',
+                    style: TextStyle(
+                        color:
+                            transactionModel.catogoryType == CatogoryType.income
+                                ? incomeColor
+                                : transactionModel.catogoryType ==
+                                        CatogoryType.expense
+                                    ? expenseColor
+                                    : Color.fromARGB(255, 20, 77, 124),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 10,
               ),
             ],
           ),

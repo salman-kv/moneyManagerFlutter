@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moneymanager/screens/account_screen/edit_profile.dart';
 import 'package:moneymanager/screens/all_transaction/deleted_screen.dart';
-import 'package:moneymanager/screens/privacy_policy/privacy_screen.dart';
+import 'package:moneymanager/screens/privacy_policy_faq/privacy_screen.dart';
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({super.key});
