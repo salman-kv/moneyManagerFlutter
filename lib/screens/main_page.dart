@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:moneymanager/screens/account_screen/account_screen.dart';
+import 'package:moneymanager/screens/budget_screen/budget_screen.dart';
 import 'package:moneymanager/screens/all_transaction/transaction.dart';
 import 'package:moneymanager/screens/app_bar/custom_appbar_main.dart';
 import 'package:moneymanager/screens/catogory/catogory_income.dart';
@@ -26,7 +26,7 @@ class _MainPageState extends State<MainPage> {
     AllTransactionScreen(),
     GraphScreen(),
     CatogoryIncome(),
-
+    BudgetScreen()
     //  AccountScreen(),
   ];
 
@@ -80,10 +80,10 @@ class _MainPageState extends State<MainPage> {
                 label: 'Catogory',
                 labelStyle: TextStyle(color: Colors.white)),
 
-            // CurvedNavigationBarItem(
-            //     child: Icon(Icons.person, color: Colors.white, size: 30),
-            //     label: 'User',
-            //     labelStyle: TextStyle(color: Colors.white)),
+            CurvedNavigationBarItem(
+                child: Icon(Icons.person, color: Colors.white, size: 30),
+                label: 'User',
+                labelStyle: TextStyle(color: Colors.white)),
           ],
           onTap: (index) {
             setState(() {

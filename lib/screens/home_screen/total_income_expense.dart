@@ -18,7 +18,7 @@ class TotalIncomeExpense extends StatelessWidget {
           const SizedBox(
             width: 10,
           ),
-          totalBox(context, expenseColor, ie[1].sum),
+          totalBox(context,expenseColor, ie[1].sum),
         ],
       );
       },)
@@ -34,6 +34,9 @@ Widget totalBox(ctx, Color color, double amount) {
     child: Container(
       height: 50,
       decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(blurRadius: 13,  offset: Offset(3, 3),color: Colors.grey,blurStyle: BlurStyle.normal)
+        ],
         borderRadius: BorderRadius.circular(10),
         color: color,
       ),

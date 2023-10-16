@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:moneymanager/db/model/budget_model/budget_model.dart';
 import 'package:moneymanager/db/model/catogory/catogory_model.dart';
 import 'package:moneymanager/db/model/target/target_model.dart';
 import 'package:moneymanager/db/model/transaction/transaction_model.dart';
@@ -16,13 +16,15 @@ main() async {
   if (!Hive.isAdapterRegistered(CatogoryTypeAdapter().typeId)) {
     Hive.registerAdapter(CatogoryTypeAdapter());
   }
-   if (!Hive.isAdapterRegistered(TransactionModelAdapter().typeId)) {
+  if (!Hive.isAdapterRegistered(TransactionModelAdapter().typeId)) {
     Hive.registerAdapter(TransactionModelAdapter());
   }
-  if(!Hive.isAdapterRegistered(TargetModelOfMoneyAdapter().typeId)){
+  if (!Hive.isAdapterRegistered(TargetModelOfMoneyAdapter().typeId)) {
     Hive.registerAdapter(TargetModelOfMoneyAdapter());
   }
-
+  if (!Hive.isAdapterRegistered(BudgetModelAdapter().typeId)) {
+    Hive.registerAdapter(BudgetModelAdapter());
+  }
 
   runApp(const MyApp());
 }

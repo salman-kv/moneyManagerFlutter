@@ -83,7 +83,6 @@ class _GraphScreenState extends State<GraphScreen> {
               bottemFilterGraph(context, MediaQuery.of(context).size,
                   Theme.of(context).textTheme, 0);
             },
-            // child: const FaIcon(FontAwesomeIcons.filter),
             child: const Icon(Icons.filter_alt),
           ),
         ),

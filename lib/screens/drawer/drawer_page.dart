@@ -17,7 +17,7 @@ class DrawerPage extends StatelessWidget {
     TextTheme _textTheme = Theme.of(context).textTheme;
     Size size = MediaQuery.of(context).size;
     return Drawer(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor:const Color.fromARGB(255, 255, 255, 255),
       width: size.width * .65,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -137,7 +137,7 @@ class DrawerPage extends StatelessWidget {
                         style: texTheme.titleLarge?.copyWith(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
-                            color: Color.fromARGB(255, 102, 15, 15)),
+                            color:const Color.fromARGB(255, 102, 15, 15)),
                       ),
                       const Icon(
                         Icons.delete,
