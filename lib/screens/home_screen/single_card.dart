@@ -19,7 +19,7 @@ class SingleCard extends StatefulWidget {
 class _SingleCardState extends State<SingleCard> {
   @override
   Widget build(BuildContext context) {
-    var m= MediaQuery.of(context).orientation;
+    var m = MediaQuery.of(context).orientation;
     return ValueListenableBuilder(
       valueListenable: TransactionDb().allTransactionListener,
       builder: (BuildContext context, List<TransactionModel> newList, _) {
@@ -32,10 +32,8 @@ class _SingleCardState extends State<SingleCard> {
             : GridView.count(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                childAspectRatio: m == Orientation.portrait ? 1 / 1.1 : 1 / 1.5,
-                crossAxisCount:  m == Orientation.portrait ? 2 : 4,
-                // childAspectRatio:    1 / 1.1,
-                // crossAxisCount: 2,
+                childAspectRatio: m == Orientation.portrait ? 1 / 1.2 : 1 / 1.5,
+                crossAxisCount: m == Orientation.portrait ? 2 : 4,
                 children: List.generate(
                     newList.length > 10 ? 10 : newList.length, (index) {
                   return singleCard(newList.reversed.toList()[index]);
@@ -54,8 +52,9 @@ class _SingleCardState extends State<SingleCard> {
         margin: const EdgeInsets.all(5),
         padding: const EdgeInsets.all(6),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: const Color.fromARGB(255, 0, 0, 0)),
+            borderRadius: BorderRadius.circular(20),
+            image: DecorationImage(image: AssetImage('assets/images/grid.png'),fit: BoxFit.cover)
+            ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -68,7 +67,7 @@ class _SingleCardState extends State<SingleCard> {
                   style: _textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
-                      fontSize: 19),
+                      fontSize: 20),
                 ),
                 Text(
                   transactionModel.catogoryModel.name.titleCase,
@@ -77,22 +76,22 @@ class _SingleCardState extends State<SingleCard> {
                       color: const Color.fromARGB(255, 154, 154, 154)),
                 ),
                 Text(
-                 ('₹${ transactionModel.amount.toString()}'),
+                  ('₹${transactionModel.amount.toString()}'),
                   style: _textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
+                      // fontWeight: FontWeight.bold,
+                      fontSize: 25,
                       color: const Color.fromARGB(214, 255, 255, 255)),
                 ),
               ],
             ),
             Center(
                 child: Container(
-              width: 50,
-              height: 50,
+              width: 55,
+              height: 55,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100),
-                color: transactionModel.catogoryType == CatogoryType.income
-                    ? const Color.fromARGB(138, 200, 230, 201)
-                    :transactionModel.catogoryType == CatogoryType.expense  ? const Color.fromARGB(49, 195, 103, 69) : Color.fromARGB(255, 1, 40, 54),
+                // color: Color.fromARGB(255, 1, 40, 54),
+                color: const Color.fromARGB(128, 56, 56, 48)
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -100,71 +99,64 @@ class _SingleCardState extends State<SingleCard> {
                   Text(
                     '${transactionModel.dateTime.day}',
                     style: _textTheme.bodyLarge?.copyWith(
-                        color: transactionModel.catogoryType ==
-                                CatogoryType.expense
-                            ? const Color.fromARGB(135, 255, 255, 255)
-                            :transactionModel.catogoryType ==
-                                CatogoryType.income ? Colors.black : const Color.fromARGB(255, 171, 169, 162) ) ,
+                        color:const Color.fromARGB(255, 171, 169, 162)),
                   ),
                   Text(
                     DateFormat.MMM().format(transactionModel.dateTime),
                     style: _textTheme.bodyLarge?.copyWith(
-                        color:transactionModel.catogoryType ==
-                                CatogoryType.expense
-                            ? const Color.fromARGB(135, 255, 255, 255)
-                            :transactionModel.catogoryType ==
-                                CatogoryType.income ? Colors.black : const Color.fromARGB(255, 171, 169, 162)),
+                        color:const Color.fromARGB(255, 171, 169, 162)),
                   ),
                 ],
               ),
             )),
             Center(
-              child: transactionModel.catogoryType == CatogoryType.income
-                  ? SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: Image.asset(
-                        'assets/icons/income.png',
-                        color: incomeColor,
-                      ),
-                    )
-                  : transactionModel.catogoryType == CatogoryType.expense ? SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: Image.asset(
-                        'assets/icons/expense.png',
-                        color: expenseColor,
-                      ),
-                    ) : SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: Image.asset(
-                        'assets/icons/expense.png',
-                        color: Color.fromARGB(255, 19, 96, 178),
-                      ),
-                    )
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: transactionModel.catogoryType == CatogoryType.income
-                  ? Text(
-                      'Income',
-                      textAlign: TextAlign.center,
-                      style: _textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w500, color: incomeColor),
-                    )
-                  :transactionModel.catogoryType == CatogoryType.expense ? Text(
-                      'Expense',
-                      textAlign: TextAlign.center,
-                      style: _textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w500, color: expenseColor),
-                    ) : Text(
-                      'Undifined',
-                      textAlign: TextAlign.center,
-                      style: _textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w500, color: const Color.fromARGB(255, 222, 222, 222)),
-                    ) 
-            ),
+                child: transactionModel.catogoryType == CatogoryType.income
+                    ? SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: Image.asset(
+                          'assets/images/profits.png',
+                        ),
+                      )
+                    : transactionModel.catogoryType == CatogoryType.expense
+                        ? SizedBox(
+                            width: 30,
+                            height: 30,
+                            child: Image.asset(
+                              'assets/images/loss.png',
+                            ),
+                          )
+                        : SizedBox(
+                            width: 30,
+                            height: 30,
+                            child: Image.asset(
+                              'assets/images/neutral.png',
+                            ),
+                          )),
+            // SizedBox(
+            //     width: double.infinity,
+            //     child: transactionModel.catogoryType == CatogoryType.income
+            //         ? Text(
+            //             'Income',
+            //             textAlign: TextAlign.center,
+            //             style: _textTheme.titleMedium?.copyWith(
+            //                 fontWeight: FontWeight.w600, color: incomeColor),
+            //           )
+            //         : transactionModel.catogoryType == CatogoryType.expense
+            //             ? Text(
+            //                 'Expense',
+            //                 textAlign: TextAlign.center,
+            //                 style: _textTheme.titleMedium?.copyWith(
+            //                     fontWeight: FontWeight.w600,
+            //                     color: expenseColor),
+            //               )
+            //             : Text(
+            //                 'Undifined',
+            //                 textAlign: TextAlign.center,
+            //                 style: _textTheme.titleMedium?.copyWith(
+            //                     fontWeight: FontWeight.w600,
+            //                     color:Color.fromARGB(255, 242, 242, 242)),
+            //               )),
           ],
         ),
       ),

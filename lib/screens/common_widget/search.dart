@@ -17,7 +17,7 @@ class Search extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: 50,
+            height: 60,
             child: TextField( 
               onChanged: (value) {
                 selectListener.value=0;
@@ -33,11 +33,11 @@ class Search extends StatelessWidget {
               controller: searchText,
               decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: incomeColor)),
+                      borderRadius: BorderRadius.circular(100),
+                      borderSide: BorderSide(color: Color.fromARGB(255, 19, 6, 121))),
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(color: Colors.black)),
+                      borderRadius: BorderRadius.circular(100),
+                      borderSide: const BorderSide(color: Color.fromARGB(255, 255, 255, 255))),
                   hintText: 'Search',
                   hintStyle: const TextStyle(
                       color: Color.fromARGB(105, 0, 0, 0), fontSize: 16),

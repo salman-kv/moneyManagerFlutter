@@ -4,6 +4,7 @@ import 'package:moneymanager/screens/all_transaction/deleted_screen.dart';
 import 'package:moneymanager/screens/privacy_policy_faq/faq.dart';
 import 'package:moneymanager/screens/privacy_policy_faq/privacy_screen.dart';
 import 'package:moneymanager/screens/privacy_policy_faq/terms&condition.dart';
+import 'package:moneymanager/theme/theme_constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final Uri _url = Uri.parse('https://www.instagram.com/_salman_kv_/');
@@ -16,138 +17,145 @@ class DrawerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme _textTheme = Theme.of(context).textTheme;
     Size size = MediaQuery.of(context).size;
-    return Drawer(
-      backgroundColor:const Color.fromARGB(255, 255, 255, 255),
-      width: size.width * .65,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              const Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: Text(
-                  'Menu',
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+    return ClipRRect(
+      borderRadius: BorderRadius.only(
+          topRight: Radius.circular(15), bottomRight: Radius.circular(10)),
+      child: Drawer(
+        backgroundColor:const Color.fromARGB(240,255, 247, 241),
+        width: size.width * .65,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-              const Divider(
-                thickness: 3,
-                color: Color.fromARGB(255, 12, 12, 12),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
-                    return const DeletedScreen();
-                  }));
-                  // Scaffold.of(context).closeDrawer();
-                },
-                child: SizedBox(
-                  width: double.infinity,
+                const Padding(
+                  padding: EdgeInsets.only(left: 8.0),
                   child: Text(
-                    'Deleted Transactions',
-                    style: texTheme.titleLarge
-                        ?.copyWith(fontSize: 20, fontWeight: FontWeight.w500),
+                    'Menu',
+                    style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
                   ),
                 ),
-              ),
-              TextButton(
-                onPressed: () {
-                  launchUrl(_url);
-                  // Navigator.of(context).pop();
-                  Scaffold.of(context).closeDrawer();
-                },
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    'About us',
-                    style: texTheme.titleLarge
-                        ?.copyWith(fontSize: 20, fontWeight: FontWeight.w500),
+                const Divider(
+                  thickness: 1,
+                  color: Color.fromARGB(255, 12, 12, 12),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (ctx) {
+                      return const DeletedScreen();
+                    }));
+                    // Scaffold.of(context).closeDrawer();
+                  },
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      'Deleted Transactions',
+                      style: texTheme.titleLarge
+                          ?.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
-              ),
-              TextButton(
-                onPressed: () {
-                   Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
-                    return const FaqScreen();
-                  }));
-                  // Navigator.of(context).pop();
-                  Scaffold.of(context).closeDrawer();
-                },
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    'Faq',
-                    
-                    style: texTheme.titleLarge
-                        ?.copyWith(fontSize: 20, fontWeight: FontWeight.w500),
+                TextButton(
+                  onPressed: () {
+                    launchUrl(_url);
+                    // Navigator.of(context).pop();
+                    Scaffold.of(context).closeDrawer();
+                  },
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      'About us',
+                      style: texTheme.titleLarge
+                          ?.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
-                    return const PrivacyScreen();
-                  }));
-                  // Navigator.of(context).pop();
-                  Scaffold.of(context).closeDrawer();
-                },
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    'Privacy policy',
-                    style: texTheme.titleLarge
-                        ?.copyWith(fontSize: 20, fontWeight: FontWeight.w500),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (ctx) {
+                      return const FaqScreen();
+                    }));
+                    // Navigator.of(context).pop();
+                    Scaffold.of(context).closeDrawer();
+                  },
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      'Faq',
+                      style: texTheme.titleLarge
+                          ?.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
-                    return const TermsAndCondition();
-                  }));
-                  // Navigator.of(context).pop();
-                  Scaffold.of(context).closeDrawer();
-                },
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    'Terms & Condition',
-                    style: texTheme.titleLarge
-                        ?.copyWith(fontSize: 20, fontWeight: FontWeight.w500),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (ctx) {
+                      return const PrivacyScreen();
+                    }));
+                    // Navigator.of(context).pop();
+                    Scaffold.of(context).closeDrawer();
+                  },
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      'Privacy policy',
+                      style: texTheme.titleLarge
+                          ?.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
-              ),
-              TextButton(
-                onPressed: () {
-                  // Navigator.of(context).pop();
-                  clearAllDialog(context);
-                },
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Clear All',
-                        style: texTheme.titleLarge?.copyWith(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color:const Color.fromARGB(255, 102, 15, 15)),
-                      ),
-                      const Icon(
-                        Icons.delete,
-                        color: Color.fromARGB(255, 102, 15, 15),
-                      )
-                    ],
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (ctx) {
+                      return const TermsAndCondition();
+                    }));
+                    // Navigator.of(context).pop();
+                    Scaffold.of(context).closeDrawer();
+                  },
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      'Terms & Condition',
+                      style: texTheme.titleLarge
+                          ?.copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
-              ),
-            ],
+                TextButton(
+                  onPressed: () {
+                    // Navigator.of(context).pop();
+                    clearAllDialog(context);
+                  },
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Clear All',
+                          style: texTheme.titleLarge?.copyWith(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: const Color.fromARGB(255, 76, 35, 35)),
+                        ),
+                        const Icon(
+                          Icons.delete,
+                          color: Color.fromARGB(255, 76, 35, 35),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

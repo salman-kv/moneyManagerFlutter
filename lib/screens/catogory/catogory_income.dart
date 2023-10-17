@@ -45,7 +45,7 @@ class _MyHomePageState extends State<CatogoryIncome>
             child: Text(
               'INCOME',
               style: TextStyle(
-                  fontSize: 17,
+                  fontSize: 19,
                   fontWeight: FontWeight.w600,
                   color: incomeColor),
             ),
@@ -54,7 +54,7 @@ class _MyHomePageState extends State<CatogoryIncome>
             child: Text(
               'EXPENSE',
               style: TextStyle(
-                  fontSize: 17,
+                  fontSize: 19,
                   fontWeight: FontWeight.w600,
                   color: expenseColor),
             ),

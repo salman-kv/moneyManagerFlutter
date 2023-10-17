@@ -70,11 +70,22 @@ class _GraphScreenState extends State<GraphScreen> {
                     isVisible: true,
                     position: LegendPosition.left,
                     alignment: ChartAlignment.center),
-              ) : const Center(child: Text('no data',style: TextStyle(
-                color: Colors.red,
-                fontSize: 18,
-                fontWeight: FontWeight.bold
-              ),));
+              ) :  SizedBox(
+                height: double.infinity,
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/images/pie_nodata.gif'),
+                    const Text('no data',style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold
+                    ),),
+                  ],
+                ),
+              );
             },
           ),
           floatingActionButton: FloatingActionButton(

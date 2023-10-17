@@ -3,7 +3,6 @@ import 'package:moneymanager/db/function/catogory/catogory_db.dart';
 import 'package:moneymanager/db/model/catogory/catogory_model.dart';
 import 'package:moneymanager/screens/catogory/catogory_income.dart';
 import 'package:moneymanager/screens/catogory/edit_catogory.dart';
-import 'package:moneymanager/theme/theme_constants.dart';
 import 'package:recase/recase.dart';
 
 class CatogoryCard extends StatelessWidget {
@@ -17,16 +16,16 @@ class CatogoryCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        padding: const EdgeInsets.all(7),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(7),
-          color: containerColor,
+          borderRadius: BorderRadius.circular(100),
+          image: DecorationImage(image: AssetImage('assets/images/grid.png'),fit: BoxFit.cover)
         ),
         height: 70,
         child: Row(
           children: [
             Text(singleList.name.titleCase, style: _textTheme.titleLarge?.copyWith(
-              color: singleList.type==CatogoryType.income ? incomeColor : expenseColor,
+              color: Colors.white,
               fontWeight: FontWeight.w600
             )),
             const Spacer(),
@@ -36,13 +35,13 @@ class CatogoryCard extends StatelessWidget {
                   return EditCatogory(catogoryModel: singleList);
                 }));
               },
-              icon: const Icon(Icons.edit),
+              icon: const Icon(Icons.edit,color: Colors.white,),
             ),
             IconButton(
               onPressed: () {
                 deleteAlartOnCatogory(context,singleList);
               },
-              icon: const Icon(Icons.delete),
+              icon: const Icon(Icons.delete,color: Colors.white),
             )
           ],
         ),

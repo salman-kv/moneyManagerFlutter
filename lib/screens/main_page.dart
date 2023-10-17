@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:moneymanager/db/function/transaction/transaction_db.dart';
 import 'package:moneymanager/screens/budget_screen/budget_screen.dart';
 import 'package:moneymanager/screens/all_transaction/transaction.dart';
 import 'package:moneymanager/screens/app_bar/custom_appbar_main.dart';
@@ -9,11 +10,10 @@ import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:moneymanager/screens/graph/graph_screen.dart';
 import 'package:moneymanager/screens/home_screen/home_page.dart';
-
-//main page here i want to change the body and the appbar name
+import 'package:moneymanager/theme/theme_constants.dart';
 
 class MainPage extends StatefulWidget {
-  MainPage({super.key});
+ const MainPage({super.key});
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -27,11 +27,11 @@ class _MainPageState extends State<MainPage> {
     GraphScreen(),
     CatogoryIncome(),
     BudgetScreen()
-    //  AccountScreen(),
   ];
 
   @override
   void initState() {
+    TransactionDb().deleteRefresh();
     super.initState();
   }
 
@@ -47,7 +47,7 @@ class _MainPageState extends State<MainPage> {
         bottomNavigationBar: CurvedNavigationBar(
           index: val,
           animationCurve: Curves.decelerate,
-          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: mainColor ,
           color: const Color.fromARGB(255, 0, 0, 0),
           animationDuration: const Duration(milliseconds: 500),
           items: const [
@@ -81,8 +81,8 @@ class _MainPageState extends State<MainPage> {
                 labelStyle: TextStyle(color: Colors.white)),
 
             CurvedNavigationBarItem(
-                child: Icon(Icons.person, color: Colors.white, size: 30),
-                label: 'User',
+                child: Icon(Icons.attach_money_outlined, color: Colors.white, size: 30),
+                label: 'Budget',
                 labelStyle: TextStyle(color: Colors.white)),
           ],
           onTap: (index) {

@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
 Color containerColor=const Color.fromARGB(255, 234, 234, 234);
-Color expenseColor=const Color.fromARGB(255, 220, 17, 2);
-Color incomeColor=const  Color.fromARGB(255, 2, 188, 8);
-Color mainColor=const Color.fromARGB(255, 198, 180, 20);
+Color expenseColor=const Color.fromARGB(255,200, 102, 96,);
+Color incomeColor=Color.fromARGB(255, 104, 181, 126);
+Color mainColor=const Color.fromARGB(250,255, 247, 241);
 Color backgroundPurple=Color.fromARGB(255, 255, 255, 255);
 
 
@@ -13,7 +13,7 @@ ThemeData lightTheme=ThemeData(
   primarySwatch:Colors.blueGrey,
   primaryColor:const Color.fromARGB(255, 231, 226, 226),
   fontFamily:'archivo narrow',
-  scaffoldBackgroundColor:backgroundPurple,
+  scaffoldBackgroundColor:Color.fromARGB(250,255, 247, 241),
   textTheme:const TextTheme(
     bodyLarge: TextStyle(
       fontSize: 15,
@@ -21,6 +21,12 @@ ThemeData lightTheme=ThemeData(
     )
   )
   
+
+
+
+
+
+
 
 );
 ThemeData darkTheme=ThemeData(

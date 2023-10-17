@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     Timer(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) {
-        return  MainPage();
+        return const MainPage();
       }));
     });
     super.initState();
@@ -33,7 +33,6 @@ class _SplashScreenState extends State<SplashScreen> {
             Image.asset('assets/images/icons8-wallet.gif'),
             const SizedBox(height: 20,),
             moneymanager(20),
-      
           ],
         ),
       )),

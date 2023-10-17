@@ -44,7 +44,7 @@ class DeletedCard extends StatelessWidget {
     );
   }
 
-  Widget deletedCard(BuildContext context, TransactionModel transactionModel) {
+     Widget deletedCard(BuildContext context, TransactionModel transactionModel) {
     final _textTheme = textTheme;
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -53,8 +53,8 @@ class DeletedCard extends StatelessWidget {
           longpressDelete(context, transactionModel);
         },
         child: Container(
-          decoration: BoxDecoration(
-            boxShadow: const [
+          decoration: const BoxDecoration(
+            boxShadow: [
               BoxShadow(
                 color: Color.fromARGB(255, 141, 141, 141),
                 blurRadius: 4,
@@ -62,32 +62,35 @@ class DeletedCard extends StatelessWidget {
                 blurStyle: BlurStyle.normal,
               )
             ],
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-            color: containerColor,
+            image: DecorationImage(
+                image: AssetImage('assets/images/grid.png'), fit: BoxFit.cover),
+            borderRadius: BorderRadius.all(Radius.circular(100)),
           ),
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(7),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                width: 50,
-                height: 50,
+                width: 55,
+                height: 55,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
-                  color: const Color.fromARGB(50, 4, 45, 114),
+                  color: const Color.fromARGB(255, 246, 246, 246),
                 ),
                 margin: const EdgeInsets.all(0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      '${transactionModel.dateTime.day}',
-                      style: _textTheme.bodyLarge,
-                    ),
+                    Text('${transactionModel.dateTime.day}',
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
                     Text(
                       DateFormat.MMM().format(transactionModel.dateTime),
-                      style: _textTheme.bodyLarge,
-                    )
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -99,46 +102,54 @@ class DeletedCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(transactionModel.porpose.titleCase,
-                        maxLines: 3,
-                        style: const TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.w500)),
+                    Text(
+                      transactionModel.porpose.titleCase,
+                      maxLines: 3,
+                      style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
+                    ),
                     Text(
                       transactionModel.catogoryModel.name.titleCase,
                       style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 19,
                         color:
                             transactionModel.catogoryType == CatogoryType.income
                                 ? incomeColor
                                 : transactionModel.catogoryType ==
                                         CatogoryType.expense
                                     ? expenseColor
-                                    : const Color.fromARGB(255, 20, 77, 124),
+                                    : const Color.fromARGB(255, 255, 255, 255),
                       ),
                     )
                   ],
                 ),
               ),
-
               Container(
                 height: 50,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Center(
-                  child: Text(
-                    '${transactionModel.amount}',
-                    style: TextStyle(
-                        color:
-                            transactionModel.catogoryType == CatogoryType.income
-                                ? incomeColor
-                                : transactionModel.catogoryType ==
-                                        CatogoryType.expense
-                                    ? expenseColor
-                                    : Color.fromARGB(255, 20, 77, 124),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
+                  child: Row(
+                    children: [
+                      Text(
+                        '₹${transactionModel.amount}',
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 23),
+                      ),
+                      transactionModel.catogoryType == CatogoryType.income
+                          ? Icon(
+                              Icons.arrow_upward_rounded,
+                              color: incomeColor,
+                              size: 17,
+                            )
+                          : transactionModel.catogoryType==CatogoryType.expense ?Icon(Icons.arrow_downward,color: expenseColor,size: 17,) :const SizedBox()
+                    ],
                   ),
                 ),
               ),
@@ -150,8 +161,116 @@ class DeletedCard extends StatelessWidget {
         ),
       ),
     );
-  }
+    }
 }
+//   Widget deletedCard(BuildContext context, TransactionModel transactionModel) {
+//     final _textTheme = textTheme;
+//     return Padding(
+//       padding: const EdgeInsets.all(8.0),
+//       child: GestureDetector(
+//         onLongPress: () {
+//           longpressDelete(context, transactionModel);
+//         },
+//         child: Container(
+//           decoration: BoxDecoration(
+//             boxShadow: const [
+//               BoxShadow(
+//                 color: Color.fromARGB(255, 141, 141, 141),
+//                 blurRadius: 4,
+//                 offset: Offset(0, 1),
+//                 blurStyle: BlurStyle.normal,
+//               )
+//             ],
+//             borderRadius: const BorderRadius.all(Radius.circular(10)),
+//             color: containerColor,
+//           ),
+//           padding: const EdgeInsets.all(8),
+//           child: Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//             children: [
+//               Container(
+//                 width: 50,
+//                 height: 50,
+//                 decoration: BoxDecoration(
+//                   borderRadius: BorderRadius.circular(100),
+//                   color: const Color.fromARGB(50, 4, 45, 114),
+//                 ),
+//                 margin: const EdgeInsets.all(0),
+//                 child: Column(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     Text(
+//                       '${transactionModel.dateTime.day}',
+//                       style: _textTheme.bodyLarge,
+//                     ),
+//                     Text(
+//                       DateFormat.MMM().format(transactionModel.dateTime),
+//                       style: _textTheme.bodyLarge,
+//                     )
+//                   ],
+//                 ),
+//               ),
+//               const SizedBox(
+//                 width: 5,
+//               ),
+//               Expanded(
+//                 child: Column(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: [
+//                     Text(transactionModel.porpose.titleCase,
+//                         maxLines: 3,
+//                         style: const TextStyle(
+//                             fontSize: 22, fontWeight: FontWeight.w500)),
+//                     Text(
+//                       transactionModel.catogoryModel.name.titleCase,
+//                       style: TextStyle(
+//                         fontWeight: FontWeight.w500,
+//                         fontSize: 16,
+//                         color:
+//                             transactionModel.catogoryType == CatogoryType.income
+//                                 ? incomeColor
+//                                 : transactionModel.catogoryType ==
+//                                         CatogoryType.expense
+//                                     ? expenseColor
+//                                     : const Color.fromARGB(255, 20, 77, 124),
+//                       ),
+//                     )
+//                   ],
+//                 ),
+//               ),
+
+//               Container(
+//                 height: 50,
+//                 decoration: BoxDecoration(
+//                   borderRadius: BorderRadius.circular(10),
+//                 ),
+//                 child: Center(
+//                   child: Text(
+//                     '${transactionModel.amount}',
+//                     style: TextStyle(
+//                         color:
+//                             transactionModel.catogoryType == CatogoryType.income
+//                                 ? incomeColor
+//                                 : transactionModel.catogoryType ==
+//                                         CatogoryType.expense
+//                                     ? expenseColor
+//                                     : Color.fromARGB(255, 20, 77, 124),
+//                         fontWeight: FontWeight.bold,
+//                         fontSize: 20),
+//                   ),
+//                 ),
+//               ),
+//               const SizedBox(
+//                 width: 10,
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 Future<void> longpressDelete(
     BuildContext context, TransactionModel transactionModel) {

@@ -197,13 +197,14 @@ class _AddTargetState extends State<AddTarget> {
   Future<void> addTarget(TargetModelOfMoney targetModel) async {
     var box = await Hive.openBox<TargetModelOfMoney>('Target-Db');
     await box.put('Target', targetModel);
+    // var left=await targetModel.startTime.difference(targetModel.endTime);
+    // print(left);
     refreshTarget();
   }
-
+}
   Future<void> refreshTarget() async {
     var box = await Hive.openBox<TargetModelOfMoney>('Target-Db');
     var val = await box.get('Target');
     targetModelListener.value = val!;
     targetModelListener.notifyListeners();
   }
-}

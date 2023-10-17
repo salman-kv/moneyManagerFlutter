@@ -28,7 +28,7 @@ class _AllTransactionState extends State<AllTransactionScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _controller = TabController(length: 3, vsync: this);
 
-  int selectedpage=0;
+  int selectedpage = 0;
 
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _AllTransactionState extends State<AllTransactionScreen>
     selectListener.value = 0;
     transactionFilterStartDate.value = TransactionDb().startDateFilter!;
     transactionFilterSelectedCatogory.value = '';
-    transactionFilterSelectedCatogoryIndex.value=-1;
+    transactionFilterSelectedCatogoryIndex.value = -1;
     super.initState();
   }
 
@@ -63,39 +63,42 @@ class _AllTransactionState extends State<AllTransactionScreen>
               appBar: TabBar(
                   onTap: (value) {
                     setState(() {
-                      selectedpage=value;
+                      selectedpage = value;
                       TransactionDb().refreshUi();
                       selectListener.value = 0;
                       transactionFilterStartDate.value =
                           TransactionDb().startDateFilter!;
-                          transactionFilterEndDate.value=DateTime.now();
+                      transactionFilterEndDate.value = DateTime.now();
                       transactionFilterSelectedCatogory.value = '';
-                      transactionFilterSelectedCatogoryIndex.value=-1;
+                      transactionFilterSelectedCatogoryIndex.value = -1;
                     });
                   },
                   indicatorColor: Colors.black,
                   controller: _controller,
-                  tabs: [
+                  tabs: const [
                     SizedBox(
                         height: 50,
                         child: Center(
                             child: Text(
                           'ALL',
-                          style: _textTheme.titleSmall,
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ))),
                     SizedBox(
                         height: 50,
                         child: Center(
                             child: Text(
                           'INCOME',
-                          style: _textTheme.titleSmall,
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ))),
                     SizedBox(
                         height: 50,
                         child: Center(
                             child: Text(
                           'EXPENSE',
-                          style: _textTheme.titleSmall,
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ))),
                   ]),
               body: Column(
@@ -122,17 +125,20 @@ class _AllTransactionState extends State<AllTransactionScreen>
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Expanded(
-                  child: ColoredBox(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    child: TextButton.icon(
-                      onPressed: () {
-                        bottemSort(context, size, _textTheme);
-                      },
-                      icon: const FaIcon(FontAwesomeIcons.sort, size: 20),
-                      label: const Text(
-                        'Sort',
-                        style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                      ),
+                  child: TextButton.icon(
+                    onPressed: () {
+                      bottemSort(context, size, _textTheme);
+                    },
+                    icon: const FaIcon(
+                      FontAwesomeIcons.sort,
+                      size: 20,
+                      color: Colors.black,
+                    ),
+                    label: const Text(
+                      'Sort',
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Color.fromARGB(255, 0, 0, 0)),
                     ),
                   ),
                 ),
@@ -140,20 +146,20 @@ class _AllTransactionState extends State<AllTransactionScreen>
                   width: .5,
                 ),
                 Expanded(
-                  child: ColoredBox(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    child: TextButton.icon(
-                      onPressed: () {
-                        bottemFilter(context, size, _textTheme,selectedpage);
-                      },
-                      icon: const Icon(
-                        Icons.filter_list,
-                        size: 25,
-                      ),
-                      label: const Text(
-                        'Filter',
-                        style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                      ),
+                  child: TextButton.icon(
+                    onPressed: () {
+                      bottemFilter(context, size, _textTheme, selectedpage);
+                    },
+                    icon: const Icon(
+                      Icons.filter_list,
+                      size: 25,
+                      color: Colors.black,
+                    ),
+                    label: const Text(
+                      'Filter',
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Color.fromARGB(255, 0, 0, 0)),
                     ),
                   ),
                 ),
@@ -172,27 +178,28 @@ class _AllTransactionState extends State<AllTransactionScreen>
     return showModalBottomSheet(
         context: context,
         builder: (ctx) {
-          return Padding(
-            padding:const EdgeInsets.all(8.0),
-            child: TransactionSort(selectedListener: selectListener.value),
-          );
-        });
-  }
-
- 
-}
-
-
- bottemFilter(BuildContext context, Size size, TextTheme textTheme,int selectedpage) {
-    return showModalBottomSheet(
-        context: context,
-        builder: (ctx) {
           return SizedBox(
-            height: size.height / 2.5,
+            height: size.height * 0.4,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: TransactionFilter(selectedpage: selectedpage),
+              child: TransactionSort(selectedListener: selectListener.value),
             ),
           );
         });
   }
+}
+
+bottemFilter(
+    BuildContext context, Size size, TextTheme textTheme, int selectedpage) {
+  return showModalBottomSheet(
+      context: context,
+      builder: (ctx) {
+        return SizedBox(
+          height: size.height * .4,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TransactionFilter(selectedpage: selectedpage),
+          ),
+        );
+      });
+}

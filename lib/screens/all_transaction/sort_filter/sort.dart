@@ -25,6 +25,7 @@ class _FilterState extends State<TransactionSort> {
     // var textsize = MediaQuery.of(context).textScaleFactor;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
          const Text(
           'Sort By : ',
@@ -42,7 +43,7 @@ class _FilterState extends State<TransactionSort> {
                   // selectListener.value = val;
                 });
               },
-              fillColor: MaterialStateProperty.all(Colors.green),
+              fillColor: MaterialStateProperty.all(const Color.fromARGB(255, 0, 0, 0)),
             ),
           const  Text(
               'Non',
@@ -64,7 +65,7 @@ class _FilterState extends State<TransactionSort> {
                   // selectListener.value = val;
                 });
               },
-              fillColor: MaterialStateProperty.all(Colors.green),
+              fillColor: MaterialStateProperty.all(const Color.fromARGB(255, 0, 0, 0)),
             ),
             const Text(
               'Amount (high to low)',
@@ -86,7 +87,7 @@ class _FilterState extends State<TransactionSort> {
                   // selectListener.value = val;
                 });
               },
-              fillColor: MaterialStateProperty.all(Colors.green),
+              fillColor: MaterialStateProperty.all(const Color.fromARGB(255, 0, 0, 0)),
             ),
           const  Text(
               'Amount ( low to high )',
@@ -108,7 +109,7 @@ class _FilterState extends State<TransactionSort> {
                   // selectListener.value = val;
                 });
               },
-              fillColor: MaterialStateProperty.all(Colors.green),
+              fillColor: MaterialStateProperty.all(const Color.fromARGB(255, 0, 0, 0)),
             ),
             const Text(
               'Date ( last to first )',
@@ -130,7 +131,7 @@ class _FilterState extends State<TransactionSort> {
                   // selectListener.value = val;
                 });
               },
-              fillColor: MaterialStateProperty.all(Colors.green),
+              fillColor: MaterialStateProperty.all(const Color.fromARGB(255, 0, 0, 0)),
             ),
             const Text(
               'Date ( first to last )',
