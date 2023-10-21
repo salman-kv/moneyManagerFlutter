@@ -1,13 +1,9 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:moneymanager/db/model/budget_model/budget_model.dart';
 import 'package:moneymanager/db/model/catogory/catogory_model.dart';
 import 'package:moneymanager/db/model/target/target_model.dart';
 import 'package:moneymanager/db/model/transaction/transaction_model.dart';
-import 'package:moneymanager/screens/main_page.dart';
 import 'package:moneymanager/screens/splash_screen.dart';
 import 'package:moneymanager/theme/theme_constants.dart';
 

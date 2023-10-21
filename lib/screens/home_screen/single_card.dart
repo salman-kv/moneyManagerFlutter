@@ -19,16 +19,29 @@ class SingleCard extends StatefulWidget {
 class _SingleCardState extends State<SingleCard> {
   @override
   Widget build(BuildContext context) {
+    Size size=MediaQuery.of(context).size;
     var m = MediaQuery.of(context).orientation;
     return ValueListenableBuilder(
       valueListenable: TransactionDb().allTransactionListener,
       builder: (BuildContext context, List<TransactionModel> newList, _) {
         return newList.isEmpty
-            ? Center(
-                child: Text(
-                'no data',
-                style: TextStyle(color: expenseColor),
-              ))
+            ? SizedBox(
+              width: double.infinity,
+              height:size.height *.4 ,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 80,
+                    width: 80,
+                    child: Image.asset('assets/images/notransaction.png')),
+                  Text(
+                  'no data found',
+                  style: TextStyle(color: expenseColor,fontWeight: FontWeight.w600,fontSize: 16),
+                ),
+                ],
+              ),
+            )
             : GridView.count(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,

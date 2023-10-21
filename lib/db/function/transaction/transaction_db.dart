@@ -118,6 +118,7 @@ class TransactionDb implements TransactionDbFunctions {
 
   Future<void> deleteTransaction(TransactionModel transactionModel) async {
     final deletedBox = await Hive.openBox<TransactionModel>(deletedDbName);
+    transactionModel.deleteDate=DateTime.now().add(Duration(days: 30));
     deletedBox.put(transactionModel.id, transactionModel);
     final box = await Hive.openBox<TransactionModel>(TRANSACTION_DB_NAME);
     box.delete(transactionModel.id);
@@ -138,6 +139,14 @@ class TransactionDb implements TransactionDbFunctions {
     final deletedBox = await Hive.openBox<TransactionModel>(deletedDbName);
     deletedBox.delete(transactionModel.id);
     deleteRefresh();
+  }
+
+  Future<void> deleteAfterOneMonth()async{
+    deletedTransactionListener.value.forEach((element) {
+      if(element.deleteDate!.isBefore(DateTime.now())){
+        deleteTransactionFromDelete(element);
+      }
+    });
   }
 
   Future<void> filterRefresh(int typeOfFilter) async {

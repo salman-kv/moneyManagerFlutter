@@ -165,11 +165,31 @@ class _AddTargetState extends State<AddTarget> {
                           backgroundColor: Color.fromARGB(255, 162, 13, 2),
                         ),
                         onPressed: () {
+                          showDialog(context: context, builder: (ctx){
+                            return  AlertDialog(
+                              content: Text('Do you want to remove your target'),
+                              actions: [
+                                IconButton(onPressed: (){
+                                  Navigator.of(context).pop();
+
+                                }, icon: Icon(Icons.close)),
+                                IconButton(onPressed: (){
+                                  
                           targetModelListener.value = TargetModelOfMoney(
                               target: 'Add Target',
                               startTime: DateTime.now(),
                               endTime: DateTime.now());
                           Navigator.of(context).pop();
+
+                          Navigator.of(context).pop();
+                                }, icon: Icon(Icons.check)),
+                                
+                              ],
+                             );
+
+                          });
+                         
+
                         },
                         icon: Icon(Icons.close),
                         label: Text('Clear'))

@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:moneymanager/db/function/transaction/transaction_db.dart';
 import 'package:moneymanager/db/model/catogory/catogory_model.dart';
 import 'package:moneymanager/db/model/transaction/transaction_model.dart';
-import 'package:moneymanager/main.dart';
 import 'package:moneymanager/screens/all_transaction/card/income_card.dart';
 import 'package:moneymanager/theme/theme_constants.dart';
 import 'package:recase/recase.dart';
@@ -29,9 +28,22 @@ class AllCard extends StatelessWidget {
                       itemCount: newList.length,
                     )
                   : Center(
-                      child: Text(
-                      'no data found',
-                      style: TextStyle(color: expenseColor),
+                      child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                            height: 80,
+                            width: 80,
+                            child:
+                                Image.asset('assets/images/notransaction.png')),
+                        Text(
+                          'No Transaction Found',
+                          style: TextStyle(
+                              color: expenseColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16),
+                        ),
+                      ],
                     ));
             },
           ),
@@ -144,7 +156,14 @@ class AllCard extends StatelessWidget {
                               color: incomeColor,
                               size: 17,
                             )
-                          : transactionModel.catogoryType==CatogoryType.expense ?Icon(Icons.arrow_downward,color: expenseColor,size: 17,) :const SizedBox()
+                          : transactionModel.catogoryType ==
+                                  CatogoryType.expense
+                              ? Icon(
+                                  Icons.arrow_downward,
+                                  color: expenseColor,
+                                  size: 17,
+                                )
+                              : const SizedBox()
                     ],
                   ),
                 ),

@@ -72,10 +72,6 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 5,
               ),
-              // const TotalIncomeExpense(),
-              // const SizedBox(
-              //   height: 5,
-              // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

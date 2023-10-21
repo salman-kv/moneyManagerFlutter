@@ -28,10 +28,10 @@ class BudgetAdd extends StatelessWidget {
                     return value[index].selected == true
                         ? Container(
                             decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 8, 8, 8),
+                                color:const Color.fromARGB(255, 8, 8, 8),
                                 borderRadius: BorderRadius.circular(100)),
-                            padding: EdgeInsets.all(8),
-                            margin: EdgeInsets.all(8),
+                            padding:const EdgeInsets.all(8),
+                            margin: const EdgeInsets.all(8),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
@@ -39,9 +39,9 @@ class BudgetAdd extends StatelessWidget {
                                   child: Text(
                                     value[index].catogoryModel.name,
                                     style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                    ),
+                                        color: Colors.white,
+                                        fontSize: 19,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
                                 const SizedBox(
@@ -51,9 +51,9 @@ class BudgetAdd extends StatelessWidget {
                                     child: Text(
                                   value[index].budget.toString(),
                                   style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                  ),
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
                                 )),
                                 IconButton(
                                     onPressed: () {
@@ -64,17 +64,59 @@ class BudgetAdd extends StatelessWidget {
                                         );
                                       }));
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.edit,
                                       color: Colors.white,
                                     )),
                                 IconButton(
                                     onPressed: () {
-                                      value[index].budget = 0;
-                                      value[index].selected = false;
-                                      CatogoryDb().budgetSet(value[index]);
+                                      showDialog(
+                                          context: context,
+                                          builder: (ctx) {
+                                            return AlertDialog(
+                                              content: const Text(
+                                                  'Do you want to remove this budget',style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                    
+                                                  ),),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: const Text(
+                                                    'No',
+                                                    style: TextStyle(
+                                                        color: Colors.red,
+                                                        fontSize: 17,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () {
+                                                    value[index].budget = 0;
+                                                    value[index].selected =
+                                                        false;
+                                                    CatogoryDb().budgetSet(
+                                                        value[index]);
+                                                        Navigator.of(context).pop();
+                                                  },
+                                                  child: const Text(
+                                                    'Yes',
+                                                    style: TextStyle(
+                                                        color: Colors.green,
+                                                        fontSize: 17,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          });
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.clear,
                                       color: Colors.white,
                                     ))
@@ -84,12 +126,22 @@ class BudgetAdd extends StatelessWidget {
                         : const SizedBox();
                   }),
                 )
-              : Center(
-                  child: Text(
-                    'Pls add your Budget',
-                    style: TextStyle(color: expenseColor),
-                  ),
-                );
+              :  SizedBox(
+                width: double.infinity,
+                child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 60,
+                            height: 60,
+                            child: Image.asset('assets/images/no budget.png')),
+                          Text('No Budget',style: TextStyle(
+                            color: expenseColor,
+                            fontWeight: FontWeight.bold
+                          ),),
+                        ],
+                      ),
+              );
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -131,47 +183,57 @@ class BudgetAdd extends StatelessWidget {
                                     padding: const EdgeInsets.all(8),
                                     margin: const EdgeInsets.all(8),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                      Text(
-                                        value[index].catogoryModel.name,
-                                        style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      IconButton(
-                                          onPressed: () {
-                                            Navigator.of(context)
-                                                .pushReplacement(
-                                                    MaterialPageRoute(
-                                                        builder: (ctx) {
-                                              return BudgetAmountSetting(
-                                                budgetModel: value[index],
-                                              );
-                                            }));
-                                          },
-                                          // icon: const Text('Add',style: TextStyle(color: Colors.amber),),
-                                          icon: Container(
-                                            decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                    255, 255, 255, 255),
-                                                borderRadius:
-                                                    BorderRadius.circular(100)),
-                                            child:const Icon(Icons.add),
-                                          )),
-                                    ]),
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            value[index].catogoryModel.name,
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          IconButton(
+                                              onPressed: () {
+                                                Navigator.of(context)
+                                                    .pushReplacement(
+                                                        MaterialPageRoute(
+                                                            builder: (ctx) {
+                                                  return BudgetAmountSetting(
+                                                    budgetModel: value[index],
+                                                  );
+                                                }));
+                                              },
+                                              // icon: const Text('Add',style: TextStyle(color: Colors.amber),),
+                                              icon: Container(
+                                                decoration: BoxDecoration(
+                                                    color: const Color.fromARGB(
+                                                        255, 255, 255, 255),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            100)),
+                                                child: const Icon(Icons.add),
+                                              )),
+                                        ]),
                                   )
                                 : const SizedBox();
                           }),
                         ),
                       )
-                    : Center(
-                        child: Text(
-                          'No expence catogory found',
-                          style: TextStyle(color: expenseColor),
+                    : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: Image.asset('assets/images/expenses.png'),
                         ),
-                      );
+                        Text(
+                          'No catogory found',
+                          style: TextStyle(color: expenseColor,fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    );
               },
             ),
           );
