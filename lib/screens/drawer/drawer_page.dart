@@ -201,7 +201,7 @@ class DrawerPage extends StatelessWidget {
                   )),
               TextButton(
                   onPressed: () {
-                    clearAll();
+                    clearAll(context);
                     Navigator.of(context).pop();
                   },
                   child: const Text(
