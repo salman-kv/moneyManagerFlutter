@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:moneymanager/screens/common_widget/money_manager.dart';
 import 'package:moneymanager/screens/main_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,19 +22,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: ColoredBox(
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // moneymanager(40),
-            Image.asset('assets/images/icons8-wallet.gif'),
-            const SizedBox(height: 20,),
-            moneymanager(20),
-          ],
-        ),
-      )),
+    return ColoredBox(
+      color: Colors.white,
+      child: SizedBox(
+        height: double.infinity,
+        width: double.infinity,
+        child: Center(child: Image.asset('assets/images/new log.png'))),
     );
+
   }
 }

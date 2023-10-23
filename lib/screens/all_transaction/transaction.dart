@@ -8,6 +8,7 @@ import 'package:moneymanager/screens/all_transaction/income_screen.dart';
 import 'package:moneymanager/screens/all_transaction/sort_filter/filter.dart';
 import 'package:moneymanager/screens/all_transaction/sort_filter/sort.dart';
 import 'package:moneymanager/screens/common_widget/search.dart';
+import 'package:moneymanager/theme/theme_constants.dart';
 
 ValueNotifier<int> selectListener = ValueNotifier(0);
 ValueNotifier<DateTime> transactionFilterStartDate =
@@ -49,15 +50,20 @@ class _AllTransactionState extends State<AllTransactionScreen>
         children: [
           Expanded(
             child: Scaffold(
-              floatingActionButton: FloatingActionButton(
-                backgroundColor: Colors.black,
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
-                    return const TransactionScreen();
-                  }));
-                },
-                child: const Icon(
-                  Icons.add,
+              floatingActionButton: CircleAvatar(
+                radius: 30,
+                backgroundColor:mainColor,
+                child: FloatingActionButton(
+                  backgroundColor: Colors.black,
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+                      return const TransactionScreen();
+                    }));
+                  },
+                  child: const Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               appBar: TabBar(
@@ -178,10 +184,9 @@ class _AllTransactionState extends State<AllTransactionScreen>
     return showModalBottomSheet(
         context: context,
         builder: (ctx) {
-          return SizedBox(
-            height: size.height * 0.4,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
+          return SingleChildScrollView(
+            child: SizedBox(
+              height: size.height * 0.4 ,
               child: TransactionSort(selectedListener: selectListener.value),
             ),
           );
@@ -192,10 +197,13 @@ class _AllTransactionState extends State<AllTransactionScreen>
 bottemFilter(
     BuildContext context, Size size, TextTheme textTheme, int selectedpage) {
   return showModalBottomSheet(
+    shape:const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10))
+    ),
       context: context,
       builder: (ctx) {
         return SizedBox(
-          height: size.height * .4,
+          height: MediaQuery.of(context).orientation==Orientation.portrait ? size.height *0.35 : size.height *0.6,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: TransactionFilter(selectedpage: selectedpage),

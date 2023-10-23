@@ -13,7 +13,7 @@ import 'package:moneymanager/screens/home_screen/home_page.dart';
 import 'package:moneymanager/theme/theme_constants.dart';
 
 class MainPage extends StatefulWidget {
- const MainPage({super.key});
+  const MainPage({super.key});
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -30,8 +30,7 @@ class _MainPageState extends State<MainPage> {
   ];
 
   @override
-  void initState() {
-    TransactionDb().deleteRefresh();
+  void initState() {    
     super.initState();
   }
 
@@ -39,12 +38,13 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: CustomAppbar(),
-        drawer: DrawerPage(
-          texTheme: Theme.of(context).textTheme,
-        ),
-        body: pages[val],
-        bottomNavigationBar: CurvedNavigationBar(
+          appBar: CustomAppbar(),
+          drawer: DrawerPage(
+            texTheme: Theme.of(context).textTheme,
+          ),
+          body: pages[val],
+          bottomNavigationBar:
+ CurvedNavigationBar(
           index: val,
           animationCurve: Curves.decelerate,
           backgroundColor: mainColor ,
@@ -58,7 +58,7 @@ class _MainPageState extends State<MainPage> {
                   size: 30,
                 ),
                 label: 'Home',
-                labelStyle: TextStyle(color: Colors.white)),
+                labelStyle: TextStyle(color: Colors.white)),  
             CurvedNavigationBarItem(
                 child: FaIcon(
                   FontAwesomeIcons.moneyCheckDollar,
@@ -91,7 +91,110 @@ class _MainPageState extends State<MainPage> {
             });
           },
         ),
-      ),
+ 
+          
+          ),
     );
   }
 }
+
+
+
+//  CurvedNavigationBar(
+//           index: val,
+//           animationCurve: Curves.decelerate,
+//           backgroundColor: mainColor ,
+//           color: const Color.fromARGB(255, 0, 0, 0),
+//           animationDuration: const Duration(milliseconds: 500),
+//           items: const [
+//             CurvedNavigationBarItem(
+//                 child: Icon(
+//                   Icons.home,
+//                   color: Colors.white,
+//                   size: 30,
+//                 ),
+//                 label: 'Home',
+//                 labelStyle: TextStyle(color: Colors.white)),  
+//             CurvedNavigationBarItem(
+//                 child: FaIcon(
+//                   FontAwesomeIcons.moneyCheckDollar,
+//                   color: Colors.white,
+//                 ),
+//                 label: 'Transaction',
+//                 labelStyle: TextStyle(color: Colors.white)),
+
+//             CurvedNavigationBarItem(
+//                 child: FaIcon(
+//                   FontAwesomeIcons.chartPie,
+//                   color: Colors.white,
+//                 ),
+//                 label: 'Graph',
+//                 labelStyle: TextStyle(color: Colors.white)),
+//             CurvedNavigationBarItem(
+//                 child:
+//                     Icon(Icons.grid_view_sharp, color: Colors.white, size: 30),
+//                 label: 'Catogory',
+//                 labelStyle: TextStyle(color: Colors.white)),
+
+//             CurvedNavigationBarItem(
+//                 child: Icon(Icons.attach_money_outlined, color: Colors.white, size: 30),
+//                 label: 'Budget',
+//                 labelStyle: TextStyle(color: Colors.white)),
+//           ],
+//           onTap: (index) {
+//             setState(() {
+//               val = index;
+//             });
+//           },
+//         ),
+
+
+// NavigationBar(
+//             // surfaceTintColor: Colors.amber,
+
+//             // backgroundColor: Colors.black,
+//             selectedIndex: val,
+//             destinations:const [
+//               NavigationDestination(
+                
+//                 icon: Icon(
+//                   Icons.home,
+//                   color: Color.fromARGB(255, 0, 0, 0),
+//                   size: 30,
+//                 ),
+//                 label: 'Home',
+                
+//               ),
+//               NavigationDestination(
+//                 icon: FaIcon(
+//                   FontAwesomeIcons.moneyCheckDollar,
+//                   color: Color.fromARGB(255, 0, 0, 0),
+//                 ),
+//                 label: 'Transaction',
+//               ),
+//               NavigationDestination(
+//                 icon: FaIcon(
+//                   FontAwesomeIcons.chartPie,
+//                   color: Color.fromARGB(255, 0, 0, 0),
+//                 ),
+//                 label: 'Graph',
+//               ),
+//               NavigationDestination(
+//                 icon:
+//                     Icon(Icons.grid_view_sharp, color: Color.fromARGB(255, 0, 0, 0), size: 30),
+//                 label: 'Catogory',
+//               ),
+//               NavigationDestination(
+//                 icon: Icon(Icons.attach_money_outlined,
+//                     color: Color.fromARGB(255, 0, 0, 0), size: 30),
+//                 label: 'Budget',
+//               ),
+//             ],
+//             onDestinationSelected: (value) {
+//               setState(() {
+                
+//               });
+//               val=value;
+//             },
+            
+//           ),

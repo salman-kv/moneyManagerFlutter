@@ -37,7 +37,7 @@ class _TransactionFilterState extends State<TransactionFilter> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Filter By : ',
+          'Filter By ',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(
@@ -47,33 +47,39 @@ class _TransactionFilterState extends State<TransactionFilter> {
           'Select Date : ',
           style: TextStyle(
             fontSize: 16,
-            // fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.bold
           ),
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Row(
               children: [
                 const Text(
                   'Start : ',
-                  style: TextStyle(fontSize: 15),
+                  style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
                 ),
-                TextButton.icon(
-                  onPressed: () async {
-                    startDate = (await showDatePicker(
-                        context: context,
-                        initialDate: TransactionDb().startDateFilter!,
-                        firstDate: TransactionDb().startDateFilter!,
-                        lastDate: endDate==null ? DateTime.now() : endDate!))!;
-                    setState(() {});
-                  },
-                  icon: const Icon(Icons.date_range),
-                  label: Text(
-                    '${startDate!.year} - ${startDate!.month} - ${startDate!.day}',
-                    style: const TextStyle(
-                        color: Color.fromARGB(255, 32, 69, 99),
-                        fontWeight: FontWeight.bold),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color.fromARGB(255, 228, 227, 225)
+                  ),
+                  child: TextButton.icon(
+                    onPressed: () async {
+                      startDate = (await showDatePicker(
+                          context: context,
+                          initialDate: TransactionDb().startDateFilter!,
+                          firstDate: TransactionDb().startDateFilter!,
+                          lastDate: endDate==null ? DateTime.now() : endDate!))!;
+                      setState(() {});
+                    },
+                    icon: const Icon(Icons.date_range),
+                    label: Text(
+                      '${startDate!.year} - ${startDate!.month} - ${startDate!.day}',
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 32, 69, 99),
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
               ],
@@ -82,32 +88,39 @@ class _TransactionFilterState extends State<TransactionFilter> {
               children: [
                 const Text(
                   'End : ',
-                  style: TextStyle(fontSize: 15),
+                  style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
                 ),
-                TextButton.icon(
-                  onPressed: () async {
-                    endDate = (await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: startDate!,
-                        lastDate: DateTime.now()))!;
-                    setState(() {});
-                  },
-                  icon: const Icon(Icons.date_range),
-                  label: Text(
-                    '${endDate!.year} - ${endDate!.month} - ${endDate!.day}',
-                    style: const TextStyle(
-                        color: Color.fromARGB(255, 32, 69, 99),
-                        fontWeight: FontWeight.bold),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color.fromARGB(255, 228, 227, 225)
+                  ),
+                  child: TextButton.icon(
+                    onPressed: () async {
+                      endDate = (await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: startDate!,
+                          lastDate: DateTime.now()))!;
+                      setState(() {});
+                    },
+                    icon: const Icon(Icons.date_range),
+                    label: Text(
+                      '${endDate!.year} - ${endDate!.month} - ${endDate!.day}',
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 32, 69, 99),
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
               ],
             ),
           ],
         ),
+        const SizedBox(height: 10,),
         const Text(
           'Select catogory : ',
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
         ),
         Expanded(
             child: SingleChildScrollView(
@@ -128,6 +141,7 @@ class _TransactionFilterState extends State<TransactionFilter> {
                     }
                   }
                   return ChoiceChip(
+                    padding:const EdgeInsets.all(10),
                     labelStyle: TextStyle(
                         color: allCatogoryStatus[index] == true
                             ? const Color.fromARGB(255, 255, 255, 255)

@@ -30,9 +30,24 @@ class ExpenseCard extends StatelessWidget {
                       },
                       itemCount: newList.length,
                     )
-                  : Center(child: Text('no data found',style: TextStyle(
-                    color: expenseColor
-                  ),));
+                  : Center(
+                      child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                            height: 80,
+                            width: 80,
+                            child:
+                                Image.asset('assets/images/notransaction.png')),
+                        Text(
+                          'No Transaction Found',
+                          style: TextStyle(
+                              color: expenseColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16),
+                        ),
+                      ],
+                    ));
             },
           ),
         )

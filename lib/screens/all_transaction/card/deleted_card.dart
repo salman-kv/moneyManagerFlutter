@@ -15,6 +15,7 @@ class DeletedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TransactionDb().deleteAfterOneMonth();
     return Scaffold(
  appBar: AllAppbar(headname: 'Deleted transaction'),
   body: Column(
@@ -32,10 +33,23 @@ class DeletedCard extends StatelessWidget {
                         itemCount: newList.length,
                       )
                     : Center(
-                        child: Text(
-                        'no data found',
-                        style: TextStyle(color: expenseColor),
-                      ));
+                      child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                            height: 80,
+                            width: 80,
+                            child:
+                                Image.asset('assets/images/notransaction.png')),
+                        Text(
+                          'No Transaction Found',
+                          style: TextStyle(
+                              color: expenseColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16),
+                        ),
+                      ],
+                    ));
               },
             ),
           )
@@ -295,9 +309,38 @@ Future<void> longpressDelete(
                 )),
             IconButton(
                 onPressed: () async {
+                  showDialog(context: context, builder: (ctx){
+                    return AlertDialog(
+                      // shape: RoundedRectangleBorder(
+                      //   borderRadius: BorderRadiusDirectional.circular(20)
+                      // ),
+                      content:const  Text("Once you deleted can't be recoverd",style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold
+                      ),),
+                      actions: [
+                        TextButton(onPressed: (){
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                        }, child: const Text('no',style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 17
+                        ),),),
+                        TextButton(onPressed: ()async{
+                          
+                  Navigator.of(context).pop();
                   Navigator.of(context).pop();
                   catogoryDeleteSnackBar(context, 'Transaction');
                   await TransactionDb().deleteTransactionFromDelete(transactionModel);
+
+                        }, child:const Text('yes',style: TextStyle(
+                          color: Color.fromARGB(255, 59, 158, 6),
+                          fontSize: 17
+                        ),),),
+                      ],
+                    );
+
+                  });
                 },
                 icon: const Icon(
                   Icons.delete,

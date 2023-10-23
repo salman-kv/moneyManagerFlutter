@@ -23,7 +23,7 @@ List<GraphModel> getGraph() {
         sum: sum, name: CatogoryDb().toatalCatogoryListener.value[i].name));
     i++;
   }
-  return returnList;
+  return returnList.reversed.toList();
 }
 
 List<GraphModel> getGraphIEOnly(){

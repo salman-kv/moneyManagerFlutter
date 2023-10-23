@@ -33,6 +33,9 @@ class BudgetScreen extends StatelessWidget {
                             ?  FutureBuilder<double>(
                                future: CatogoryDb().budgetCalc(newList[index]),
                               builder:(context, snapshot) {
+                                if(snapshot.data==null){
+                                  return const SizedBox();
+                                }
                                 return  Column(
                                   children: [
                                     Text(
@@ -52,14 +55,14 @@ class BudgetScreen extends StatelessWidget {
                                           backStrokeWidth: 25,
                                           mergeMode: true,
                                           maxValue:  newList[index].budget ,
-                                          backColor: Color.fromARGB(255, 224, 224, 224),
+                                          backColor:const Color.fromARGB(255, 224, 224, 224),
                                           barColores: const [
                                             Color.fromARGB(255, 151, 151, 151),
                                             Color.fromARGB(255, 61, 61, 61),
                                             Color.fromARGB(255, 38, 38, 38),
                                             Color.fromARGB(255, 0, 0, 0)
                                           ],
-                                          fullProgressColor: Color.fromARGB(255, 182, 5, 5),
+                                          fullProgressColor:const Color.fromARGB(255, 182, 5, 5),
                                           barValue: snapshot.data!,
                                           
                                           
@@ -72,9 +75,9 @@ class BudgetScreen extends StatelessWidget {
                                         Text('${snapshot.data!} / ',style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
-                                          color:  snapshot.data! > newList[index].budget ?  Color.fromARGB(255, 182, 5, 5) : Colors.black
+                                          color:  snapshot.data! > newList[index].budget ? const Color.fromARGB(255, 182, 5, 5) : Colors.black
                                         ),),
-                                        Text('${newList[index].budget}',style: TextStyle(
+                                        Text('${newList[index].budget}',style: const TextStyle(
                                           color:Color.fromARGB(255, 182, 5, 5),
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold
@@ -84,7 +87,7 @@ class BudgetScreen extends StatelessWidget {
 
                                     Visibility(
                                       visible: snapshot.data! > newList[index].budget,
-                                      child: Text(' " ${newList[index].catogoryModel.name} is out of budget " ',style: TextStyle(
+                                      child: Text(' " ${newList[index].catogoryModel.name} is out of budget " ',style: const TextStyle(
                                         color: Color.fromARGB(255, 182, 5, 5),
                                         fontSize: 17
                                       ),)),
@@ -100,13 +103,23 @@ class BudgetScreen extends StatelessWidget {
                           
                     )
                   ) : Expanded(child: Center(
-                    child: Text('Pls add your Budget',style: TextStyle(
-                      color: expenseColor
-                    ),),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 60,
+                          height: 60,
+                          child: Image.asset('assets/images/no budget.png')),
+                        Text('No Budget',style: TextStyle(
+                          color: expenseColor,
+                          fontWeight: FontWeight.bold
+                        ),),
+                      ],
+                    ),
                   )),
                   Container(
                     width: size.width * .5,
-                    margin: EdgeInsets.all(5),
+                    margin:const EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       borderRadius:BorderRadius.circular(100),
                       color: Colors.black

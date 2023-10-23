@@ -23,6 +23,9 @@ class TransactionModel {
   @HiveField(5)
   String? id;
 
+  @HiveField(5)
+  DateTime? deleteDate;
+
   TransactionModel(
       {required this.porpose,
       required this.amount,

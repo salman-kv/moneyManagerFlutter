@@ -81,13 +81,24 @@ class _MyHomePageState extends State<CatogoryIncome>
                                 singleList: newList.reversed.toList()[index],
                               );
                             }))
-                          : const Text(
-                              'Income Catogory is Empty',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Color.fromARGB(255, 131, 11, 2)),
-                              textAlign: TextAlign.center,
-                            );
+                          : Center(
+                              child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                    height: 80,
+                                    width: 80,
+                                    child: Image.asset(
+                                        'assets/images/notransaction.png')),
+                                Text(
+                                  'No Income Catogory Found',
+                                  style: TextStyle(
+                                      color: expenseColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ));
                     }),
                 ValueListenableBuilder(
                     valueListenable: CatogoryDb().expenseCatogoryListener,
@@ -101,13 +112,24 @@ class _MyHomePageState extends State<CatogoryIncome>
                                 singleList: newList.reversed.toList()[index],
                               );
                             }))
-                          : const Text(
-                              'Expence Catogory is Empty',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Color.fromARGB(255, 131, 11, 2)),
-                              textAlign: TextAlign.center,
-                            );
+                          : Center(
+                              child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                    height: 80,
+                                    width: 80,
+                                    child: Image.asset(
+                                        'assets/images/notransaction.png')),
+                                Text(
+                                  'No Expence Catogory Found',
+                                  style: TextStyle(
+                                      color: expenseColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ));
                     }),
               ],
             ),
@@ -134,7 +156,8 @@ class _MyHomePageState extends State<CatogoryIncome>
                 }));
               }
             },
-            backgroundColor: _controller.index == 0 ? incomeColor : expenseColor,
+            backgroundColor:
+                _controller.index == 0 ? incomeColor : expenseColor,
             child: const Icon(
               Icons.add,
               size: 30,
@@ -142,7 +165,7 @@ class _MyHomePageState extends State<CatogoryIncome>
           ),
         ),
       ),
-      floatingActionButtonLocation:FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
@@ -150,33 +173,31 @@ class _MyHomePageState extends State<CatogoryIncome>
 catogoryEditSnackBar(BuildContext context) {
   return ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      content:const  Text(
+      content: const Text(
         'Catogory Updated',
         textAlign: TextAlign.center,
       ),
-      duration:const Duration(seconds: 2),
-      padding:const EdgeInsets.all(10),
-      margin:const  EdgeInsets.symmetric(vertical: 30,horizontal: 10),
+      duration: const Duration(seconds: 2),
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
       behavior: SnackBarBehavior.floating,
       backgroundColor: incomeColor,
     ),
-    
   );
 }
 
-catogoryDeleteSnackBar(BuildContext context,String name) {
+catogoryDeleteSnackBar(BuildContext context, String name) {
   return ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(
         '$name Deleted',
         textAlign: TextAlign.center,
       ),
-      duration:const  Duration(seconds: 2),
-      padding:const EdgeInsets.all(10),
-      margin:const EdgeInsets.symmetric(vertical: 30,horizontal: 10),
+      duration: const Duration(seconds: 2),
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
       behavior: SnackBarBehavior.floating,
       backgroundColor: expenseColor,
     ),
-    
   );
 }

@@ -77,7 +77,7 @@ class _GraphScreenState extends State<GraphScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset('assets/images/pie_nodata.gif'),
+                    Image.asset('assets/images/pie no data.png'),
                     const Text('no data',style: TextStyle(
                       color: Colors.red,
                       fontSize: 18,

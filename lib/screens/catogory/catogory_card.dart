@@ -19,16 +19,17 @@ class CatogoryCard extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
-          image: DecorationImage(image: AssetImage('assets/images/grid.png'),fit: BoxFit.cover)
+          image: const DecorationImage(image: AssetImage('assets/images/grid.png'),fit: BoxFit.cover)
         ),
-        height: 70,
+        // height: 70,
         child: Row(
           children: [
-            Text(singleList.name.titleCase, style: _textTheme.titleLarge?.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.w600
-            )),
-            const Spacer(),
+            Expanded(
+              child: Text(singleList.name.titleCase, style: _textTheme.titleLarge?.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w600
+              )),
+            ),
             IconButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (ctx){
